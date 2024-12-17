@@ -323,6 +323,7 @@ Returns all the comments written by the current user.
           "User": {
             "id": 1,
             "userName": "PuppyLover",
+            "email": "user@gmail.com
           },
           "Post": {
             "id": 1,
@@ -366,7 +367,8 @@ Returns all the comments that belong to a post specified by id.
           "updatedAt": "2021-11-19 20:39:36" ,
           "User": {
             "id": 1,
-            "userName": "CatLover"
+            "userName": "CatLover",
+            "email": "user2@gmail.com
           },
         }
       ]
