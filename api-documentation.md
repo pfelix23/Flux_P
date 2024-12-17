@@ -55,7 +55,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - Route path: /api/session
+  - Route path: /session
   - Body: none
 
 - Successful Response when there is a logged in user
@@ -97,7 +97,7 @@ information.
 - Request
 
   - Method: POST
-  - Route path: /api/session
+  - Route path: /session
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -165,7 +165,7 @@ user's information.
 - Request
 
   - Method: POST
-  - Route path: /api/users
+  - Route path: /users
   - Headers:
     - Content-Type: application/json
   - Body:
