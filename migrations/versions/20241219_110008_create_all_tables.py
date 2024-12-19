@@ -32,6 +32,8 @@ def upgrade():
     sa.Column('follower_id', sa.Integer(), nullable=False),
     sa.Column('following_id', sa.Integer(), nullable=False),
     sa.Column('note', sa.String(length=255), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
     sa.ForeignKeyConstraint(['follower_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['following_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -44,6 +46,8 @@ def upgrade():
     sa.Column('description', sa.Text(), nullable=False),
     sa.Column('likes_count', sa.Integer(), nullable=False),
     sa.Column('comments_count', sa.Integer(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -52,6 +56,8 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('post_id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.Text(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
     sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -61,6 +67,8 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('post_id', sa.Integer(), nullable=False),
     sa.Column('note', sa.String(length=255), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
     sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
