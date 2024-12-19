@@ -12,7 +12,7 @@ class Comment(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("posts.id")), nullable=False)
     comment = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
-    updated_at = db.Column(db.DateTime, onupdate=func.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, onupdate=func.now(), server_default=func.now(), nullable=False)
 
     user = db.relationship("User", back_populates="comments")
     post = db.relationship("Post", back_populates="comments")

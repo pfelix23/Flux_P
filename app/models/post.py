@@ -15,7 +15,7 @@ class Post(db.Model):
     likes_count = db.Column(db.Integer, default=0, nullable=False)
     comments_count = db.Column(db.Integer, default=0, nullable=False)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
-    updated_at = db.Column(db.DateTime, onupdate=func.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, onupdate=func.now(), server_default=func.now(), nullable=False)
 
     user = db.relationship("User", back_populates="posts")
     comments = db.relationship("Comment", back_populates="post", cascade="all, delete-orphan")
