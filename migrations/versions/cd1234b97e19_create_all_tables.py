@@ -1,8 +1,8 @@
 """create all tables
 
-Revision ID: 84027e069022
+Revision ID: cd1234b97e19
 Revises: 
-Create Date: 2024-12-19 11:00:08.136166
+Create Date: 2024-12-20 01:51:55.939706
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '84027e069022'
+revision = 'cd1234b97e19'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,8 +32,8 @@ def upgrade():
     sa.Column('follower_id', sa.Integer(), nullable=False),
     sa.Column('following_id', sa.Integer(), nullable=False),
     sa.Column('note', sa.String(length=255), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.ForeignKeyConstraint(['follower_id'], ['users.id'], ),
     sa.ForeignKeyConstraint(['following_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -46,8 +46,8 @@ def upgrade():
     sa.Column('description', sa.Text(), nullable=False),
     sa.Column('likes_count', sa.Integer(), nullable=False),
     sa.Column('comments_count', sa.Integer(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -56,8 +56,8 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('post_id', sa.Integer(), nullable=False),
     sa.Column('comment', sa.Text(), nullable=False),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -67,8 +67,8 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('post_id', sa.Integer(), nullable=False),
     sa.Column('note', sa.String(length=255), nullable=True),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.func.now(), nullable=False),
-    sa.Column('updated_at', sa.DateTime(), onupdate=sa.func.now(), nullable=False),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=False),
     sa.ForeignKeyConstraint(['post_id'], ['posts.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')

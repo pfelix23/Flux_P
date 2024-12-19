@@ -12,7 +12,7 @@ class Like(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("posts.id")), nullable=False)
     note = db.Column(db.String(255), nullable=True)
     created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
-    updated_at = db.Column(db.DateTime, onupdate=func.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, onupdate=func.now(), server_default=func.now(), nullable=False)
 
     user = db.relationship("User", back_populates="likes")
     post = db.relationship("Post", back_populates="likes")
