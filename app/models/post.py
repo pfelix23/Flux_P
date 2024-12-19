@@ -1,4 +1,5 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
+from sqlalchemy.sql import func
 
 class Post(db.Model):
     __tablename__ = 'posts'
@@ -13,6 +14,8 @@ class Post(db.Model):
     description = db.Column(db.Text, nullable=False)
     likes_count = db.Column(db.Integer, default=0, nullable=False)
     comments_count = db.Column(db.Integer, default=0, nullable=False)
+    created_at = db.Column(db.DateTime, server_default=func.now(), nullable=False)
+    updated_at = db.Column(db.DateTime, onupdate=func.now(), nullable=False)
 
     user = db.relationship("User", back_populates="posts")
     comments = db.relationship("Comment", back_populates="post", cascade="all, delete-orphan")
@@ -26,5 +29,7 @@ class Post(db.Model):
             "title": self.title,
             "description": self.description,
             "likes_count": self.likes_count,
-            "comments_count": self.comments_count
+            "comments_count": self.comments_count,
+            "created_at": self.created_at,
+            "updated_at": self.updated_at
         }
