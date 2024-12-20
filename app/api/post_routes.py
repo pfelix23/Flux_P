@@ -155,7 +155,7 @@ def create_post():
     db.session.add(new_post)
     db.session.commit()
 
-    return jsonify(new_post.to_dict), 201
+    return jsonify(new_post.to_dict()), 201
 
 
 @post_routes.route("/<int:post_id>/update", methods=["PUT"])
@@ -169,6 +169,10 @@ def edit_post(post_id):
     if not post:
         return jsonify({"error": "post couldn't be found"})
 
+    image = data.get("image")
+    description = data.get("description")
+    title = data.get("title")
+
     if not image or not description:
         return jsonify(
             {
@@ -180,17 +184,13 @@ def edit_post(post_id):
             }
         )
 
-    image = data.get("image")
-    description = data.get("description")
-    title = data.get("title")
-
     post.image = image
     post.description = description
     post.title = title
 
     db.session.commit()
 
-    return jsonify(post.to_dict)
+    return jsonify(post.to_dict())
 
 
 @post_routes.route("/<int:post_id>", methods=["DELETE"])
