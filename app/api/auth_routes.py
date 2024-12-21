@@ -34,6 +34,15 @@ def login():
     return form.errors, 401
 
 
+@auth_routes.route('/current')
+@login_required
+def get_current_user():
+    """
+    Returns the current authenticated user
+    """
+    return current_user.to_dict(), 200
+
+
 @auth_routes.route('/logout')
 def logout():
     """
