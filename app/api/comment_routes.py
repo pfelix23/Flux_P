@@ -1,91 +1,63 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import Comment, Post, db, User
+from app.models import Comment, db
 
-comments_routes = Blueprint("comments", __name__)
+comment_routes = Blueprint("comments", __name__)
 
 
-# Get all comments_routes for a specific post
-@comments_routes.route("/posts/<int:post_id>", methods=["GET"])
+@comment_routes.route("/current")
 @login_required
-def get_comments(post_id):
-    comments = (
-        Comment.query.filter_by(post_id=post_id)
-        .order_by(Comment.created_at.desc())
-        .all()
-    )
-    response = [
+def get_current_user_comments():
+    comments = Comment.query.filter_by(user_id=current_user.id).order_by(Comment.created_at.desc()).all()
+
+    comments_data = [
         {
             "id": comment.id,
-            "text": comment.text,
-            "user": {"id": comment.user.id, "username": comment.user.username},
+            "user_id": comment.user_id,
+            "post_id": comment.post_id,
+            "comment": comment.comment,
             "created_at": comment.created_at,
+            "updated_at": comment.updated_at,
         }
         for comment in comments
     ]
-    return jsonify(response), 200
+
+    return jsonify({"Comments": comments_data}), 200
 
 
-# Add a comment to a specific post
-@comments_routes.route("/posts/<int:post_id>", methods=["POST"])
-@login_required  # Require authentication
-def create_comment(post_id):
-    data = request.get_json()
-    te = data.get("te")
-
-    if not te:
-        return {"error": "Content is required"}, 400
-
-    post = Post.query.get(post_id)
-    if not post:
-        return {"error": "Post not found"}, 404
-
-    new_comment = Comment(te=te, user_id=current_user.id, post_id=post_id)
-    db.session.add(new_comment)
-    db.session.commit()
-
-    return new_comment.to_dict(), 201
-
-
-@comments_routes.route("/<int:comment_id>", methods=["PUT"])
+@comment_routes.route("/<int:comment_id>", methods=["PUT"])
 @login_required
-def update_comment(comment_id):
-    """
-    Update an existing comment by its id
-    """
+def edit_comment(comment_id):
     data = request.get_json()
-    te = data.get("te")
+    comment_text = data.get("comment")
 
-    if not te:
-        return {"error": "Content is required"}, 400
+    if not comment_text:
+        return jsonify({"error": "Comment text is required"}), 400
 
     comment = Comment.query.get(comment_id)
     if not comment:
-        return {"error": "Comment not found"}, 404
+        return jsonify({"error": "Comment couldn't be found"}), 404
 
     if comment.user_id != current_user.id:
-        return {"error": "Unauthorized"}, 403
+        return jsonify({"error": "Unauthorized"}), 403
 
-    comment.te = te
+    comment.comment = comment_text
     db.session.commit()
 
-    return comment.to_dict(), 200
+    return jsonify(comment.to_dict()), 200
 
 
-@comments_routes.route("/<int:comment_id>", methods=["DELETE"])
+@comment_routes.route("/<int:comment_id>", methods=["DELETE"])
 @login_required
 def delete_comment(comment_id):
-    """
-    Delete a comment by its id
-    """
     comment = Comment.query.get(comment_id)
     if not comment:
-        return {"error": "Comment not found"}, 404
+        return jsonify({"error": "Comment couldn't be found"}), 404
 
     if comment.user_id != current_user.id:
-        return {"error": "Unauthorized"}, 403
+        return jsonify({"error": "Unauthorized"}), 403
 
     db.session.delete(comment)
     db.session.commit()
 
-    return {"message": "Comment deleted successfully"}, 200
+    return jsonify({"message": "Comment deleted successfully"}), 200

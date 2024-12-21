@@ -206,3 +206,51 @@ def delete_post(post_id):
     db.session.commit()
 
     return jsonify({"message": "Successfully deleted"})
+
+
+@post_routes.route("/<int:post_id>/comments")
+def get_comments_for_post(post_id):
+    post = Post.query.get(post_id)
+
+    if not post:
+        return jsonify({"error": "Post couldn't be found"}), 404
+
+    comments = Comment.query.filter_by(post_id=post_id).order_by(Comment.created_at.desc()).all()
+
+    comments_data = [
+        {
+            "id": comment.id,
+            "user_id": comment.user_id,
+            "post_id": comment.post_id,
+            "comment": comment.comment,
+            "created_at": comment.created_at,
+            "updated_at": comment.updated_at,
+        }
+        for comment in comments
+    ]
+
+    return jsonify({"comments": comments_data}), 200
+
+
+@post_routes.route("/<int:post_id>/comments", methods=["POST"])
+@login_required
+def create_comment_for_post(post_id):
+    post = Post.query.get(post_id)
+
+    if not post:
+        return jsonify({"error": "post couldn't be found"}), 404
+
+    data = request.get_json()
+    comment_text = data.get("comment")
+
+    if not comment_text:
+        return jsonify({"error": "comment text is required"}), 400
+
+    new_comment = Comment(
+        user_id=current_user.id, post_id=post_id, comment=comment_text
+    )
+
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return jsonify(new_comment.to_dict()), 201
