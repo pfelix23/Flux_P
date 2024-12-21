@@ -9,20 +9,7 @@ comment_routes = Blueprint("comments", __name__)
 @login_required
 def get_current_user_comments():
     comments = Comment.query.filter_by(user_id=current_user.id).order_by(Comment.created_at.desc()).all()
-
-    comments_data = [
-        {
-            "id": comment.id,
-            "user_id": comment.user_id,
-            "post_id": comment.post_id,
-            "comment": comment.comment,
-            "created_at": comment.created_at,
-            "updated_at": comment.updated_at,
-        }
-        for comment in comments
-    ]
-
-    return jsonify({"Comments": comments_data}), 200
+    return jsonify({"comments": [comment.to_dict() for comment in comments]}), 200
 
 
 @comment_routes.route("/<int:comment_id>", methods=["PUT"])

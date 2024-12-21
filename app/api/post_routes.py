@@ -254,3 +254,54 @@ def create_comment_for_post(post_id):
     db.session.commit()
 
     return jsonify(new_comment.to_dict()), 201
+
+
+@post_routes.route("/<int:post_id>/likes")
+def get_likes_for_post(post_id):
+    post = Post.query.get(post_id)
+
+    if not post:
+        return jsonify({"error": "Post couldn't be found"}), 404
+
+    likes = Like.query.filter_by(post_id=post_id).order_by(Like.created_at.desc()).all()
+
+    likes_data = [
+        {
+            "id": like.id,
+            "user_id": like.user_id,
+            "post_id": like.post_id,
+            "note": like.note,
+            "created_at": like.created_at,
+            "updated_at": like.updated_at,
+        }
+        for like in likes
+    ]
+
+    return jsonify({"likes": likes_data}), 200
+
+
+@post_routes.route("/<int:post_id>/likes", methods=["POST"])
+@login_required
+def add_like_to_post(post_id):
+    post = Post.query.get(post_id)
+
+    if not post:
+        return jsonify({"error": "Post couldn't be found"}), 404
+
+    existing_like = Like.query.filter_by(post_id=post_id, user_id=current_user.id).first()
+    if existing_like:
+        return jsonify({"error": "User has already liked this post"}), 400
+
+    data = request.get_json(silent=True)
+    note = data.get("note", "") if data else "" 
+
+    new_like = Like(
+        user_id=current_user.id,
+        post_id=post_id,
+        note=note,
+    )
+
+    db.session.add(new_like)
+    db.session.commit()
+
+    return jsonify(new_like.to_dict()), 201
