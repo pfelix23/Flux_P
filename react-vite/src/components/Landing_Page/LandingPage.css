@@ -1,0 +1,19 @@
+.posts_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.posts_img {
+    height: 800px;
+    width: 700px;
+}
+
+.added_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+}

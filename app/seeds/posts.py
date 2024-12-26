@@ -6,7 +6,7 @@ def seed_posts():
     seed_data = [
         Post(
             user_id=1,
-            image="https://example.com/image1.jpg",
+            image="https://a0.muscache.com/im/ml/photo_enhancement/pictures/miso/Hosting-959493006014888753/original/6e4e417f-25e3-4578-941e-42fdd68a3971.jpeg?im_w=1200&im_format=avif",
             title="Sunset View",
             description="A beautiful sunset over the mountains."
         ),
