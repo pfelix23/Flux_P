@@ -36,7 +36,7 @@ function LandingPage() {
                             <div>{post.comment_count}</div>
                             <OpenModalMenuItem
                                 itemText="💬"
-                                modalComponent={<CommentsModal/>}
+                                modalComponent={<CommentsModal postId={post.id}/>}
                             />
                             </div>
                         </picture>
