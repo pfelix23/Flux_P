@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import './LandingPage.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import CommentsModal from '../CommentsModal/CommentsModal';
 
 
 function LandingPage() {
@@ -27,15 +28,14 @@ function LandingPage() {
             <section className='posts_section'>
                 {[...posts].reverse().map((post) => {
                     return (
-                        <picture onClick={() => navigate(`/posts/${post.id}`)} key={post.id}>
-                            <img src={post.image} alt={post.description} className='posts_img' />
+                        <picture key={post.id}>
+                            <img onClick={() => navigate(`/posts/${post.id}`)} src={post.image} alt={post.description} className='posts_img' />
                             <div className='added_info'>
                             <div>{post.description}</div>
                             <div>{post.likes}</div>
                             <div>{post.comment_count}</div>
                             <OpenModalMenuItem
-                                itemText="Comments"
-                                onItemClick={closeMenu}
+                                itemText="💬"
                                 modalComponent={<CommentsModal/>}
                             />
                             </div>
