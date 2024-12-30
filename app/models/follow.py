@@ -24,5 +24,6 @@ class Follow(db.Model):
             "following_id": self.following_id,
             "note": self.note,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "following_username": self.following.username
         }
