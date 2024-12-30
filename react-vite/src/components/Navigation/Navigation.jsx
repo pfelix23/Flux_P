@@ -4,13 +4,13 @@ import { thunkLogout } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 // import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
-import SignupFormModal from "../SignupFormModal/SignupFormModal"
+import SignupFormModal from "../SignupFormModal/SignupFormModal";
 import "./Navigation.css";
 
 function Navigation() {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
 
   const handleLogout = () => {
@@ -23,7 +23,9 @@ function Navigation() {
         {!user ? (
           <>
             <li onClick={() => setModalContent(<LoginFormModal />)}>Log In</li>
-            <li onClick={() => setModalContent(<SignupFormModal />)}>Sign Up</li>
+            <li onClick={() => setModalContent(<SignupFormModal />)}>
+              Sign Up
+            </li>
           </>
         ) : (
           <>
