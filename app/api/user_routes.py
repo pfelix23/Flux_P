@@ -14,6 +14,14 @@ def users():
     users = User.query.all()
     return {'users': [user.to_dict() for user in users]}
 
+@user_routes.route('/recent')
+def recent_users():
+    """
+    Query for the 5 most recent users and returns them
+    """
+    users = User.query.order_by(User.created_at.desc()).limit(5).all()
+    return {'users': [user.to_dict() for user in users]}
+
 
 @user_routes.route('/<int:id>')
 @login_required

@@ -1,1 +1,30 @@
-/* TODO: Add sitewide styles */
+body {
+  font-family: 'Alike', serif;
+  color: #547375;
+  background-color: #112b2d;
+  margin: 0 100px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#root {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#nav-bar,
+#sidebar {
+  width: 25%;
+  height: 75vh;
+  border-right: 1px solid #000000;
+  overflow-y: auto;
+  border-radius: 5px;
+}
