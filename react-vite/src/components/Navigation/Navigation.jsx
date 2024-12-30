@@ -4,6 +4,7 @@ import { thunkLogout } from "../../redux/session";
 import { useModal } from "../../context/Modal";
 // import OpenModalButton from "../OpenModalButton/OpenModalButton"
 import LoginFormModal from "../LoginFormModal/LoginFormModal";
+import SignupFormModal from "../SignupFormModal/SignupFormModal"
 import "./Navigation.css";
 
 function Navigation() {
@@ -20,9 +21,10 @@ function Navigation() {
     <nav id="nav-bar">
       <ul>
         {!user ? (
-          <li onClick={() => setModalContent(<LoginFormModal />)}>
-            Log In
-          </li>
+          <>
+            <li onClick={() => setModalContent(<LoginFormModal />)}>Log In</li>
+            <li onClick={() => setModalContent(<SignupFormModal />)}>Sign Up</li>
+          </>
         ) : (
           <>
             <li onClick={() => navigate("/")}>Home</li>
