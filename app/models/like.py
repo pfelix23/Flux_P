@@ -25,7 +25,7 @@ class Like(db.Model):
             "note": self.note,
             "created_at": self.created_at,
             "updated_at": self.updated_at,
-            "user_id": self.user_id,
+            "poster_username": self.post.user.username,
             "post_id": self.post.id,
             "image": self.post.image,
             "title": self.post.title,

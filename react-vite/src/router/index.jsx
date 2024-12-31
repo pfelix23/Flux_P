@@ -3,6 +3,8 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import LikesPage from '../components/LikesPage/LikesPage';
 import FollowingPage from '../components/FollowingPage/FollowingPage';
+import CommentsPage from '../components/CommentsPage/CommentsPage';
+import UserPage from '../components/UserPage/UserPage';
 
 import Layout from './Layout';
 
@@ -30,6 +32,14 @@ export const router = createBrowserRouter([
         path: "/following-users",
         element: <FollowingPage />
       },
+      {
+        path: "/comments",
+        element: <CommentsPage />
+      },
+      {
+        path: "/:username",
+        element: <UserPage />
+      }
     ],
   },
 ]);

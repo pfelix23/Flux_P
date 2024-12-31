@@ -31,5 +31,6 @@ class Post(db.Model):
             "likes_count": self.likes_count,
             "comments_count": self.comments_count,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "username": self.user.username
         }

@@ -12,6 +12,13 @@ def get_current_user_comments():
     return jsonify({"comments": [comment.to_dict() for comment in comments]}), 200
 
 
+@comment_routes.route("/<int:comment_id>", methods=["GET"])
+@login_required
+def get_comment(comment_id):
+    comment = Comment.query.get(comment_id)
+    return jsonify(comment.to_dict()), 200
+
+
 @comment_routes.route("/<int:comment_id>", methods=["PUT"])
 @login_required
 def edit_comment(comment_id):

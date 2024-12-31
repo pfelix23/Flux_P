@@ -54,6 +54,7 @@ function CommentsModal({ postId }) {
                     {displayedComments.map((comment) => {
                         return (
                             <div key={comment.id}>
+                                <p>{comment.username}</p>
                                 <p>{comment.comment}</p>
                             </div>
                         );

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './LikesPage.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CommentsModal from '../CommentsModal/CommentsModal';
+// import LikeModal from '../LikeModal/LikeModal';
 
 
 function LikesPage() {
@@ -29,7 +30,8 @@ function LikesPage() {
             <h1>Likes</h1>
                 {likes.reverse().map((like) => {
                     return (
-                        <div key={like.post_id}>
+                        <div key={like.post}>
+                            <div><a href={`/${like.poster_username}`}>{like.poster_username}</a></div>
                             <img onClick={() => navigate(`/posts/${like.post_id}`)} src={like.image} alt={like.description} className='likes_img'></img>
                             <div>{like.description}</div>
                             <div>{like.likes}</div>
@@ -38,6 +40,10 @@ function LikesPage() {
                             itemText="💬"
                             modalComponent={<CommentsModal postId={like.post_id}/>}
                             />
+                            {/* <OpenModalMenuItem
+                            itemText="Manage"
+                            modalComponent={<LikeModal postId={like.post_id}/>}
+                            /> */}
                         </div>
                     );
                 })
