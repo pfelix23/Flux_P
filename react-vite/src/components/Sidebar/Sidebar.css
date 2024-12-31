@@ -4,7 +4,7 @@
   align-items: flex-start;
   height: 100vh;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #0d2224;
   border-left: 1px solid #000000;
   overflow-y: auto;
 }
@@ -21,7 +21,7 @@
 }
 
 #sidebar button:hover {
-  background-color: #022829;
+  background-color: #6C596E;
 }
 
 #sidebar h3 {
@@ -30,12 +30,16 @@
   border-bottom: 1px solid #0000003a;
   padding-bottom: 5px;
   width: 100%;
+  color: white;
+  font-family: 'Sour Gummy';
 }
 
 #users-list ul {
 list-style: none;
 padding: 0;
 width: 100%;
+color: white;
+font-family: 'Sour Gummy';
 }
 
 #users-list li {

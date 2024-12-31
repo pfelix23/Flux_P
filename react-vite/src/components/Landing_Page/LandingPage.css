@@ -1,17 +1,61 @@
 .posts_section {
+  overflow-y: auto;
+}
+
+.posts_section_2 {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow-y: auto; 
 }
 .posts_img {
-  height: 800px;
+  height: 75vh;
   width: 700px;
+} 
+
+.posts_img:hover {
+  cursor: pointer;
 }
+
 .added_info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-color: #25644b;
+  height: 50px;
+  margin-top: -4px;
+  margin-bottom: 15px;
+  border-bottom-right-radius: 35px;
+  border-bottom-left-radius: 35px;
   
 }
+
+.landing_page_button_container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+}
+
+.landing_page_button {
+display: flex;
+justify-content: center;
+font-family: 'Sour Gummy';
+font-size: 30px;
+width: 50%;
+border-radius: 12px;
+background-color: #112b2d;
+color:white;
+margin: 1px;
+}
+
+.landing_page_button:hover {
+  cursor: pointer;
+  background-color: #25644b;
+}
+
+html {
+  scroll-behavior: smooth;
+} 
