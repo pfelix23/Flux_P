@@ -24,5 +24,13 @@ class Like(db.Model):
             "post_id": self.post_id,
             "note": self.note,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "user_id": self.user_id,
+            "post_id": self.post.id,
+            "image": self.post.image,
+            "title": self.post.title,
+            "description": self.post.description,
+            "likes_count": self.post.likes_count,
+            "comments_count": self.post.comments_count,
+
         }

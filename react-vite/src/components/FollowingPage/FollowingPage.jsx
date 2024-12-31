@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './FollowingPage.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
-import FollowsModal from '../FollowsModal/FollowsModal'
+// import FollowsModal from '../FollowsModal/FollowsModal'
 
 
 function FollowingPage() {
@@ -31,10 +31,10 @@ function FollowingPage() {
                         <div key={follow.id}>
                             <p>{follow.following_username}</p>
                             <p>{follow.note}</p>
-                            <OpenModalMenuItem
+                            {/* <OpenModalMenuItem
                                 itemText="Manage"
                                 modalComponent={<FollowsModal followId={follow.id}/>}
-                            />
+                            /> */}
                         </div>
                     )
                 })}
