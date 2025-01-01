@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import { FaRegHeart } from "react-icons/fa";
-import './LandingPage.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { thunkLoadLikes } from '../../redux/likes';
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import LikeModal from '../LikeModal/LikeModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CommentsModal from '../CommentsModal/CommentsModal';
-
+import './LandingPage.css';
 
 function LandingPage() {
     const [posts, setPosts] = useState([]);
@@ -13,21 +15,25 @@ function LandingPage() {
     const [users, setUsers] = useState();
     const [errors, setErrors] = useState();
     const [view, setView] = useState('all');
+    const likes = useSelector((state) => state.likes);
+    const sessionUser = useSelector((state) => state.session.user);
     const navigate = useNavigate();
-    const sessionUser = useSelector((state) => state.session.user)
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetch('/api/posts')
-        .then((res) => res.json())
-        .then((data) => setPosts(data.Posts))
-        .catch(async (res) => {
-            const data = await res.json();
-            if(data && data.errors) {
-                setErrors(data.errors);
-                console.log(errors)
-            }
-        })
-    }, [errors]);
+            .then((res) => res.json())
+            .then((data) => setPosts(data.Posts))
+            .catch(async (res) => {
+                const data = await res.json();
+                if(data && data.errors) {
+                    setErrors(data.errors);
+                    console.log(errors)
+                }
+            })
+
+        dispatch(thunkLoadLikes());
+    }, [dispatch]);
 
     useEffect(() => {
         fetch('/api/posts/followed_posts')
@@ -73,6 +79,12 @@ function LandingPage() {
                     </div>                    
                 )}
                 {display.reverse().map((post) => {
+
+                    const like = Object.values(likes).find((like) => like.post_id === post.id);
+                    const isLiked = !!like;
+                    const likeId = like?.id || null;
+                    const note = like?.note || "";
+
                     const handleClick = () => {
                         if(sessionUser && sessionUser.id === post.id) {
                             navigate(`/posts/${post.id}`)
@@ -93,7 +105,21 @@ function LandingPage() {
                             <div className='added_info_div'>
                             <div className='description'>{post.description}</div>
                             <div className='likes_container'> 
-                            <div className='heart_icon'><FaRegHeart /></div>
+                            <div className='heart_icon' onClick={(e) => e.stopPropagation()}>
+                                        <OpenModalButton
+                                            modalComponent={
+                                                <LikeModal
+                                                    postId={post.id}
+                                                    isLiked={isLiked}
+                                                    likeId={likeId}
+                                                    existingNote={note}
+                                                />
+                                            }
+                                            buttonText={
+                                                isLiked ? <FaHeart color="red" /> : <FaRegHeart />
+                                            }
+                                        />
+                                    </div>
                             <div className='likes_count'>{post.likes}</div>
                             </div>
                             <div className='added_info'>{post.comment_count}</div>
