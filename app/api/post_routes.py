@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Post, Like, Comment, User, db
+from app.models import Post, Like, Comment, User, Follow, db
 
 post_routes = Blueprint("posts", __name__)
 
@@ -347,3 +347,45 @@ def add_like_to_post(post_id):
     db.session.commit()
 
     return jsonify(new_like.to_dict()), 201
+
+@post_routes.route('/followed_posts')
+@login_required
+def get_followed_posts():
+    follows = Follow.query.filter_by(follower_id=current_user.id).all()
+    followed_user_ids = [follow.following_id for follow in follows]
+
+    posts = Post.query.filter(Post.user_id.in_(followed_user_ids)).all()
+    posts_data = []
+
+    for post in posts:
+
+        likes_count = Like.query.filter_by(post_id=post.id).count()
+
+        comments = Comment.query.filter_by(post_id=post.id).all()
+
+        posts_data.append(
+            {
+                "id": post.id,
+                "user_id": post.user_id,
+                "image": post.image,
+                "title": post.title,
+                "description": post.description,
+                "created_at": post.created_at,
+                "updated_at": post.updated_at,
+                "likes": likes_count,
+                "comment_count": len(comments),
+                "Comments": [
+                    {
+                        "id": comment.id,
+                        "user_id": comment.user_id,
+                        "post_id": comment.post_id,
+                        "comment": comment.comment,
+                        "created_at": comment.created_at,
+                        "updated_at": comment.updated_at,
+                    }
+                    for comment in comments
+                ],
+            }
+        )
+
+    return jsonify({"Posts": posts_data}), 200
