@@ -1,7 +1,11 @@
 import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
-import LandingPage from '../components/Landing_Page/LandingPage';
+import LikesPage from '../components/LikesPage/LikesPage';
+import FollowingPage from '../components/FollowingPage/FollowingPage';
+import CommentsPage from '../components/CommentsPage/CommentsPage';
+import UserPage from '../components/UserPage/UserPage';
+
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -10,7 +14,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <LandingPage />,
+        element: <h1>Welcome!!</h1>,
       },
       {
         path: "login",
@@ -20,6 +24,22 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupFormPage />,
       },
+      {
+        path: "/likes",
+        element: <LikesPage />
+      },
+      {
+        path: "/following-users",
+        element: <FollowingPage />
+      },
+      {
+        path: "/comments",
+        element: <CommentsPage />
+      },
+      {
+        path: "/:username",
+        element: <UserPage />
+      }
     ],
   },
 ]);

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
-from app.models import Post, Like, Comment, db
+from app.models import Post, Like, Comment, User, db
 
 post_routes = Blueprint("posts", __name__)
 
@@ -49,6 +49,47 @@ def posts():
 @login_required
 def user_posts():
     user_posts = Post.query.filter_by(user_id=current_user.id).all()
+
+    posts_data = []
+
+    for post in user_posts:
+
+        likes_count = Like.query.filter_by(post_id=post.id).count()
+
+        comments = Comment.query.filter_by(post_id=post.id).all()
+
+        posts_data.append(
+            {
+                "id": post.id,
+                "user_id": post.user_id,
+                "image": post.image,
+                "title": post.title,
+                "description": post.description,
+                "created_at": post.created_at,
+                "updated_at": post.updated_at,
+                "likes": likes_count,
+                "comment_count": len(comments),
+                "Comments": [
+                    {
+                        "id": comment.id,
+                        "user_id": comment.user_id,
+                        "post_id": comment.post_id,
+                        "comment": comment.comment,
+                        "created_at": comment.created_at,
+                        "updated_at": comment.updated_at,
+                    }
+                    for comment in comments
+                ],
+            }
+        )
+
+    return jsonify({"Posts": posts_data}), 200
+
+
+@post_routes.route("/users/<string:username>")
+@login_required
+def username_posts(username):
+    user_posts = Post.query.join(User).filter(User.username==username).all()
 
     posts_data = []
 
@@ -225,6 +266,7 @@ def get_comments_for_post(post_id):
             "comment": comment.comment,
             "created_at": comment.created_at,
             "updated_at": comment.updated_at,
+            "username": comment.user.username
         }
         for comment in comments
     ]
