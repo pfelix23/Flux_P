@@ -7,6 +7,7 @@ import LikesPage from '../components/LikesPage/LikesPage';
 import FollowingPage from '../components/FollowingPage/FollowingPage';
 import CommentsPage from '../components/CommentsPage/CommentsPage';
 import UserPage from '../components/UserPage/UserPage';
+import ProfilePage from "../components/ProfilePage/ProfilePage";
 import Layout from './Layout';
 
 export const router = createBrowserRouter([
@@ -15,7 +16,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!!</h1>,
+        element: <LandingPage />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePage />,
       },
       {
         path: "login",
@@ -44,7 +49,7 @@ export const router = createBrowserRouter([
       {
         path: "/posts/:post_id",
         element: <PostPage />
-      }
+      },
     ],
   },
 ]);

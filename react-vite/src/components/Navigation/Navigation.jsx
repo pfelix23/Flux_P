@@ -18,7 +18,7 @@ import "./Navigation.css";
 function Navigation() {
   const user = useSelector((state) => state.session.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const { setModalContent } = useModal();
 
   const handleLogout = () => {
