@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import { FaRegHeart } from "react-icons/fa";
 import './LandingPage.css';
 function LandingPage() {
     const [posts, setPosts] = useState([]);
     const [sessionPosts, setSessionPosts] = useState([])
+    const [users, setUsers] = useState();
     const [errors, setErrors] = useState();
-    const [view, setView] = useState('all')
+    const [view, setView] = useState('all');
     const navigate = useNavigate();
     const sessionUser = useSelector((state) => state.session.user)
 
@@ -21,7 +23,7 @@ function LandingPage() {
                 console.log(errors)
             }
         })
-    }, []);
+    }, [errors]);
 
     useEffect(() => {
         fetch('/api/posts/followed_posts')
@@ -34,7 +36,20 @@ function LandingPage() {
                 console.log(errors)
             }
         })
-    }, [sessionUser]);        
+    }, [sessionUser, errors]);
+    
+    useEffect(() => {
+        fetch('/api/users/others')
+        .then((res) => res.json())
+        .then((data) => setUsers(data.Users))
+        .catch(async (res) => {
+            const data = await res.json();
+            if(data && data.errors) {
+                setErrors(data.errors);
+                console.log(errors)
+            }
+        })
+    }, [sessionUser, errors]); 
     
     const switchView = (viewType) => {
         setView(viewType)
@@ -54,13 +69,30 @@ function LandingPage() {
                     </div>                    
                 )}
                 {display.reverse().map((post) => {
+                    const handleClick = () => {
+                        if(sessionUser && sessionUser.id === post.id) {
+                            navigate(`/posts/${post.id}`)
+                        } else if(sessionUser && sessionUser.id !== post.id) {
+                            navigate('/')
+                        } else navigate('/signup')
+                    }
+                    const handleUser = () => {
+                      const user = users?.find((user) => user.id === post.user_id);
+                      if(user && user.id !== sessionUser.id) {
+                        return user.username
+                      }
+                    }
                     return (
-                        <picture onClick={() => navigate(`/api/posts/${post.id}`)} key={post.id}>
+                        <picture onClick={handleClick} key={post.id} className='post_container'>
+                            <div className='user_info'>{handleUser()} {sessionUser && sessionUser.id !== post.user_id &&(<div className='follow_text'>Follow</div>)}</div>
                             <img src={post.image} alt={post.description} className='posts_img' />
-                            <div className='added_info'>
-                            <div style={{fontFamily: 'Sour Gummy', color: 'white', paddingLeft: '20px'}}>{post.description}</div>
-                            <div>{post.likes}</div>
-                            <div>{post.comment_count}</div>
+                            <div className='added_info_div'>
+                            <div className='description'>{post.description}</div>
+                            <div className='likes_container'> 
+                            <div className='heart_icon'><FaRegHeart /></div>
+                            <div className='likes_count'>{post.likes}</div>
+                            </div>
+                            <div className='added_info'>{post.comment_count}</div>
                             </div>
                         </picture>
                     );

@@ -2,10 +2,23 @@
   display: flex;
   flex-direction: column;
   padding: 20px;
-  background-color: #112b2d;
-  border-right: 1px solid #000000;
-  color: white;
+  background-color: black;
+  color: #FFFFFFA6;
   font-family: 'Sour Gummy';
+  font-weight: bold;
+}
+
+#nav-bar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+#nav-bar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#nav-bar::-webkit-scrollbar-thumb {
+  background: transparent;
 }
 
 #nav-bar ul {
@@ -15,8 +28,16 @@
 }
 
 #nav-bar li {
-  padding: 30px 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 15px;
   width: 100%;
   cursor: pointer;
+  margin-bottom: 4px;
+  height: fit-content;
+}
+
+#nav-bar li:hover {
+border: solid 1px #46976A;
 }
 
