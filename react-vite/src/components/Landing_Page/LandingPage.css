@@ -73,11 +73,11 @@
   color: #46976A;
   font-size: large;
   font-weight: bold;
+  cursor: pointer;
 }
 
 .follow_tex:hover {
   text-decoration: underline;
-  cursor: pointer;
 }
 
 .added_info_div {

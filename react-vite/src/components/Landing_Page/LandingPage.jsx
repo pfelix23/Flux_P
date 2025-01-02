@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { thunkLoadLikes } from '../../redux/likes';
+import { thunkLoadFollows } from '../../redux/follows';
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import LikeModal from '../LikeModal/LikeModal';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CommentsModal from '../CommentsModal/CommentsModal';
+import FollowModal from '../FollowModal/FollowModal';
+import { useModal } from '../../context/Modal';
 import './LandingPage.css';
 
 function LandingPage() {
@@ -15,10 +18,12 @@ function LandingPage() {
     const [users, setUsers] = useState();
     const [errors, setErrors] = useState();
     const [view, setView] = useState('all');
-    const likes = useSelector((state) => state.likes);
-    const sessionUser = useSelector((state) => state.session.user);
+    const { setModalContent } = useModal();
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const sessionUser = useSelector((state) => state.session.user);
+    const likes = useSelector((state) => state.likes);
+    const follows = useSelector((state) => state.follows);
 
     useEffect(() => {
         fetch('/api/posts')
@@ -32,6 +37,7 @@ function LandingPage() {
                 }
             })
 
+        dispatch(thunkLoadFollows());    
         dispatch(thunkLoadLikes());
     }, [dispatch]);
 
@@ -83,7 +89,12 @@ function LandingPage() {
                     const like = Object.values(likes).find((like) => like.post_id === post.id);
                     const isLiked = !!like;
                     const likeId = like?.id || null;
-                    const note = like?.note || "";
+                    const likeNote = like?.note || "";
+
+                    const follow = follows[post.user_id];
+                    const isFollowing = !!follow;
+                    const followId = follow?.id || null;
+                    const followNote = follow?.note || "";
 
                     const handleClick = () => {
                         if(sessionUser && sessionUser.id === post.id) {
@@ -92,15 +103,34 @@ function LandingPage() {
                             navigate('/')
                         } else navigate('/signup')
                     }
+
                     const handleUser = () => {
-                      const user = users?.find((user) => user.id === post.user_id);
-                      if(user && user.id !== sessionUser.id) {
-                        return user.username
-                      }
+                        const user = users?.find((user) => user.id === post.user_id);
+                        if(user && (!sessionUser || user.id !== sessionUser.id)) {
+                          return user.username
+                        }
                     }
+                    
                     return (
                         <picture onClick={handleClick} key={post.id} className='post_container'>
-                            <div className='user_info'>{handleUser()} {sessionUser && sessionUser.id !== post.user_id &&(<div className='follow_text'>Follow</div>)}</div>
+                            <div className='user_info'>
+                                {handleUser()} 
+                                {sessionUser && sessionUser.id !== post.user_id && (
+                                    <span className='follow_text' onClick={(e) => {
+                                        e.stopPropagation();
+                                        setModalContent(
+                                            <FollowModal
+                                                userId={post.user_id}
+                                                isFollowing={isFollowing}
+                                                followId={followId}
+                                                existingNote={followNote}
+                                            />
+                                        );
+                                    }}>
+                                        {isFollowing ? "Following" : "Follow"}
+                                    </span>
+                                )}
+                            </div>
                             <img src={post.image} alt={post.description} className='posts_img' />
                             <div className='added_info_div'>
                             <div className='description'>{post.description}</div>
@@ -112,7 +142,7 @@ function LandingPage() {
                                                     postId={post.id}
                                                     isLiked={isLiked}
                                                     likeId={likeId}
-                                                    existingNote={note}
+                                                    existingNote={likeNote}
                                                 />
                                             }
                                             buttonText={
