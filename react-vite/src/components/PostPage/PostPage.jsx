@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import './PostPage.css';
 
@@ -8,9 +8,8 @@ function PostPage() {
     const [post, setPost] = useState([]);
     const [errors, setErrors] = useState();
     const navigate = useNavigate();
-    const post_id_object = useParams()
-    const post_id = post_id_object.post_id
-    const sessionUser = useSelector((state) => state.session.user)
+    const post_id = useParams().post_id;
+    // const sessionUser = useSelector((state) => state.session.user)
 
     useEffect(() => {
         fetch(`/api/posts/${post_id}`)

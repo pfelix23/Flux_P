@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './FollowingPage.css';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+// import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 // import FollowModal from '../FollowModal/FollowModal'
 
 

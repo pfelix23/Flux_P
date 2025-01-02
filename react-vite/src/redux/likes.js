@@ -38,7 +38,7 @@ export const thunkAddLike = (postId, note = "") => async (dispatch) => {
   const response = await fetch(`/api/posts/${postId}/likes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ note }),
+    body: JSON.stringify({ note })
   });
 
   if (response.ok) {
@@ -55,7 +55,7 @@ export const thunkUpdateLike = (likeId, note) => async (dispatch) => {
   const response = await fetch(`/api/likes/${likeId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ note }),
+    body: JSON.stringify({ note })
   });
 
   if (response.ok) {
@@ -70,7 +70,7 @@ export const thunkUpdateLike = (likeId, note) => async (dispatch) => {
 
 export const thunkDeleteLike = (likeId) => async (dispatch) => {
   const response = await fetch(`/api/likes/${likeId}`, {
-    method: "DELETE",
+    method: "DELETE"
   });
 
   if (response.ok) {
@@ -84,18 +84,20 @@ const initialState = {};
 
 const likesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_LIKES:
+    case LOAD_LIKES: {
       const likes = {};
       action.payload.forEach((like) => (likes[like.id] = like));
       return likes;
+    }
     case ADD_LIKE:
       return { ...state, [action.payload.id]: action.payload };
     case UPDATE_LIKE:
       return { ...state, [action.payload.id]: action.payload };
-    case DELETE_LIKE:
-      const newState = { ...state };
-      delete newState[action.payload];
-      return newState;
+      case DELETE_LIKE: {
+        const newState = { ...state };
+        delete newState[action.payload];
+        return newState;
+      }  
     default:
       return state;
   }
