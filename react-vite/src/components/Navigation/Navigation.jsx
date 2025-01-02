@@ -13,6 +13,7 @@ import { RiUserFollowFill } from "react-icons/ri";
 import { IoLogOut } from "react-icons/io5";
 import { IoLogIn } from "react-icons/io5";
 import { SiFlux } from "react-icons/si";
+import logo from '../../../public/flux-high-resolution-logo.png';
 import "./Navigation.css";
 
 function Navigation() {
@@ -27,6 +28,7 @@ function Navigation() {
 
   return (
     <nav id="nav-bar">
+      <img src={logo} alt="Flux Logo" className="flux-logo" title="Ideas flow, connections grow!"/> 
       <ul>
         {!user ? (
           <>
