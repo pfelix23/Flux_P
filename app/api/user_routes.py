@@ -12,7 +12,7 @@ def users():
     Query for all users and returns them in a list of user dictionaries
     """
     users = User.query.all()
-    return {'users': [user.to_dict() for user in users]}
+    return jsonify({'users': [user.to_dict() for user in users]})
 
 @user_routes.route('/recent')
 def recent_users():
@@ -31,3 +31,25 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/others')
+@login_required
+def other_users():
+
+    users = User.query.all()
+
+    users_data = []
+
+    for user in users:
+
+        users_data.append(
+            {
+                "id": user.id,
+                "email": user.email,
+                "username": user.username
+
+            }
+        )
+
+    return jsonify({"Users": users_data}), 200
+

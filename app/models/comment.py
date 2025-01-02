@@ -24,5 +24,6 @@ class Comment(db.Model):
             "post_id": self.post_id,
             "comment": self.comment,
             "created_at": self.created_at,
-            "updated_at": self.updated_at
+            "updated_at": self.updated_at,
+            "username": self.user.username
         }
