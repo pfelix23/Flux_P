@@ -52,3 +52,12 @@ font-family: 'Sour Gummy';
 #users-list li:hover {
   border: solid 1px #46976A;
 }
+
+#user_follow_div  {
+  display: flex;
+}
+
+#new_user:hover {
+  text-decoration: underline;
+  color: white;
+}

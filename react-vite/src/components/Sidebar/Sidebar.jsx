@@ -41,6 +41,14 @@ function Sidebar() {
         <h3>New Users</h3>
         <ul>
           {newUsers.map((newUser) => {
+            const follow_modal = () => {setModalContent(
+              <FollowModal
+                userId={newUser.id}
+                isFollowing={isFollowing}
+                followId={followId}
+                existingNote={followNote}
+              />
+            )}
             if (user && newUser.id === user.id) {
               return (
                 <li
@@ -91,21 +99,22 @@ function Sidebar() {
             return (
               <li
                 key={newUser.id}
-                onClick={() =>
-                  setModalContent(
-                    <FollowModal
-                      userId={newUser.id}
-                      isFollowing={isFollowing}
-                      followId={followId}
-                      existingNote={followNote}
-                    />
-                  )
-                }
+                // onClick={() =>
+                //   setModalContent(
+                //     <FollowModal
+                //       userId={newUser.id}
+                //       isFollowing={isFollowing}
+                //       followId={followId}
+                //       existingNote={followNote}
+                //     />
+                //   )
+                // }
               >
-                {newUser.username}
-                <span className='follow_text'>
+                <div id='user_follow_div'> <div id='new_user' onClick={() => navigate(`/${newUser.username}`)}>{newUser.username}</div>
+                <span className='follow_text' onClick={() => follow_modal()}>
                   {isFollowing ? "Following" : "Follow"}
                 </span>
+                </div>
               </li>
             );
           })}
