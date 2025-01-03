@@ -101,6 +101,7 @@ function LandingPager() {
                     const likeNote = like?.note || "";
 
                     const follow = follows[post.user_id];
+                    const isFollowing = !!follow;
                     const followId = follow?.id || null;
                     const followNote = follow?.note || "";
 
@@ -118,7 +119,7 @@ function LandingPager() {
                       }
                     }
 
-                    const isFollowing = sessionPosts.some((sessionPost) => sessionPost.id === post.id);
+                    // const isFollowing = sessionPosts.some((sessionPost) => sessionPost.id === post.id);
 
                     const openLikesModal = () => {
                         setModalContent(<LikeModal postId={post.id} isLiked={isLiked} likeId={likeId} existingNote={likeNote} closeModal={closeModal}/>)
