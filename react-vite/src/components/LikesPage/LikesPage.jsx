@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import './LikesPage.css';
 import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CommentsModal from '../CommentsModal/CommentsModal';
-// import LikeModal from '../LikeModal/LikeModal';
+import LikeModal from '../LikeModal/LikeModal';
 
 
 function LikesPage() {
@@ -24,6 +24,19 @@ function LikesPage() {
         })
     }, []);
 
+    const refreshLikes = () => {
+        fetch('/api/likes/current')
+            .then((res) => res.json())
+            .then((data) => setLikes(data.likes))
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) {
+                    setErrors(data.errors);
+                    console.log(errors);
+                }
+            });
+    };
+
     return (
         <div className='posts_section'>
             <section className='posts_section'>
@@ -40,10 +53,16 @@ function LikesPage() {
                             itemText="💬"
                             modalComponent={<CommentsModal postId={like.post_id}/>}
                             />
-                            {/* <OpenModalMenuItem
+                            <OpenModalMenuItem
                             itemText="Manage"
-                            modalComponent={<LikeModal postId={like.post_id}/>}
-                            /> */}
+                            modalComponent={<LikeModal
+                                postId={like.post_id}
+                                isLiked={true}
+                                likeId={like.id}
+                                existingNote={like.note}
+                                refreshLikes={refreshLikes}
+                                />}
+                            /> 
                         </div>
                     );
                 })

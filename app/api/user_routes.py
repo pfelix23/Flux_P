@@ -32,6 +32,15 @@ def user(id):
     user = User.query.get(id)
     return user.to_dict()
 
+@user_routes.route('/<string:username>')
+@login_required
+def user_by_username(username):
+    """
+    Query for a user by username and returns that user in a dictionary
+    """
+    user = User.query.filter_by(username=username).first()
+    return user.to_dict()
+
 @user_routes.route('/others')
 @login_required
 def other_users():

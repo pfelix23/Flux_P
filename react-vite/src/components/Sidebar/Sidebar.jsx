@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import { thunkLoadFollows } from '../../redux/follows';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import FollowModal from '../FollowModal/FollowModal';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
@@ -28,6 +29,7 @@ function Sidebar() {
 
     dispatch(thunkLoadFollows());
   }, [dispatch]);
+  
 
   return (
     <section id="sidebar">
@@ -89,30 +91,28 @@ function Sidebar() {
             const followNote = follow.note || "";
 
             return (
-              <li
-                key={newUser.id}
-                onClick={() =>
-                  setModalContent(
-                    <FollowModal
+              <li key={newUser.id}>
+              <a href={`/${newUser.username}`}>{newUser.username}</a>
+              <span className="follow_text">
+                <OpenModalMenuItem
+                  itemText={isFollowing ? "Following" : "Follow"}
+                  modalComponent={
+                    <FollowModal 
                       userId={newUser.id}
                       isFollowing={isFollowing}
                       followId={followId}
                       existingNote={followNote}
                     />
-                  )
-                }
-              >
-                {newUser.username}
-                <span className='follow_text'>
-                  {isFollowing ? "Following" : "Follow"}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
-  );
+                  }
+                />
+              </span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+);
 }
 
 export default Sidebar;
