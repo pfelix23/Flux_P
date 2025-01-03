@@ -52,7 +52,7 @@ function ProfilePage() {
 
   return (
     <div className="posts_section">
-      <section className="posts_section">
+      <section className="posts_section"><h1 id="h1">{sessionUser.username}'s profile</h1>
         {[...posts].reverse().map((post) => {
           const like = Object.values(likes).find((like) => like.post_id === post.id);
           const isLiked = !!like;

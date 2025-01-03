@@ -142,3 +142,11 @@
     color: white;
     font-family: 'Sour Gummy';
   }
+
+  #h1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-family: 'Sour Gummy';
+    margin-left: 4%;
+  }

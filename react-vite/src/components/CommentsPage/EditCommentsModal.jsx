@@ -35,7 +35,7 @@ function EditCommentsModal({ commentId }) {
 
     return (
         <div id="edit_comment_modal" key={comment.id}>
-            <h2>Comment</h2>
+            <h2>Edit Comment</h2>
             <form onSubmit={handleUpdate}>
                 <textarea 
                     value={updatedComment}
