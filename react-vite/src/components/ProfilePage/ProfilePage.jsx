@@ -5,9 +5,8 @@ import { useModal } from '../../context/Modal';
 import { thunkLoadLikes } from '../../redux/likes';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegCommentDots } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
+import PostModal from '../PostModal/PostModal';
+import { FaRegHeart, FaRegCommentDots, FaHeart, FaCog } from "react-icons/fa";
 import "./ProfilePage.css";
 function ProfilePage() {
   const [posts, setPosts] = useState([]);
@@ -38,6 +37,27 @@ function ProfilePage() {
       dispatch(thunkLoadLikes());
   }, [errors, dispatch]);
 
+
+  const refreshPosts = async () => {
+    fetch("/api/posts/current")
+      .then((res) => {
+        if (!res.ok) {
+          throw res;
+        }
+        return res.json();
+      })
+      .then((data) => setPosts(data.Posts))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+          console.log(errors);
+        }
+      });
+      dispatch(thunkLoadLikes());
+  };
+
+
   const fill_heart = (postId) => {
     setFillHeart(prev => ({
         ...prev,
@@ -63,21 +83,30 @@ function ProfilePage() {
           const openCommentModal = () => {
             setModalContent(<CommentsModal postId={post.id} closeModal={closeModal}/>)
           }
+
+          const openPostModal = () => {
+            setModalContent(<PostModal postId={post.id} existingTitle={post.title} existingDescription={post.description} closeModal={closeModal} refreshPosts={refreshPosts} />)
+          }
+
+
           return (
             <picture key={post.id} className="post_container">
               <div className='user_info'>{sessionUser.username}</div>
               <img src={post.image} alt={post.description} className='posts_img' onClick={() => navigate(`/posts/${post.id}`)} />
               <div className='added_info_div'>
-              <div className='description'>{post.description}</div>
-              <div className='likes_container'> 
-              <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
-              <div className='likes_count'>{post.likes}</div>
-              </div>
-              <div className='comment_container'>
-              <div className='comment_icon' onClick={(e) => {e.stopPropagation();openCommentModal()}}><FaRegCommentDots />
-              </div>
-              <div className='comment_count'>{post.comment_count}</div>
-              </div>
+                <div className='description'>{post.description}</div>
+                <div className='manage_post_container'>
+                <div className='manage_post_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
+                </div>
+                <div className='likes_container'> 
+                <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
+                <div className='likes_count'>{post.likes}</div>
+                </div>
+                <div className='comment_container'>
+                <div className='comment_icon' onClick={(e) => {e.stopPropagation();openCommentModal()}}><FaRegCommentDots />
+                </div>
+                <div className='comment_count'>{post.comment_count}</div>
+                </div>
               </div>
             </picture>
           );

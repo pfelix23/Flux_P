@@ -202,7 +202,6 @@ def create_post():
 @post_routes.route("/<int:post_id>/update", methods=["PUT"])
 @login_required
 def edit_post(post_id):
-
     data = request.get_json()
 
     post = Post.query.get(post_id)
@@ -210,28 +209,26 @@ def edit_post(post_id):
     if not post:
         return jsonify({"error": "post couldn't be found"})
 
-    image = data.get("image")
     description = data.get("description")
     title = data.get("title")
 
-    if not image or not description:
+    if not description:
         return jsonify(
             {
                 "message": "Bad Request",
                 "errors": {
-                    "image": "Image is required",
                     "description": "Description is required",
                 },
             }
         )
 
-    post.image = image
     post.description = description
     post.title = title
 
     db.session.commit()
 
     return jsonify(post.to_dict())
+
 
 
 @post_routes.route("/<int:post_id>", methods=["DELETE"])
