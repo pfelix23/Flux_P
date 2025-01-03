@@ -1,14 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegCommentDots } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
+import { FaRegHeart, FaRegCommentDots, FaHeart, FaCog } from "react-icons/fa";
 import { thunkLoadLikes } from '../../redux/likes';
 import { thunkLoadFollows } from '../../redux/follows';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import FollowModal from '../FollowModal/FollowModal';
+import PostModal from '../PostModal/PostModal';
 import { useModal } from '../../context/Modal';
 import './LandingPager.css';
 function LandingPager() {
@@ -40,6 +39,21 @@ function LandingPager() {
         dispatch(thunkLoadFollows());    
         dispatch(thunkLoadLikes());
     }, [errors, dispatch]);
+
+    const refreshPosts = async () => {
+        fetch('/api/posts')
+        .then((res) => res.json())
+        .then((data) => setPosts(data.Posts))
+        .catch(async (res) => {
+            const data = await res.json();
+            if(data && data.errors) {
+                setErrors(data.errors);
+                console.log(errors)
+            }
+        })
+        dispatch(thunkLoadFollows());    
+        dispatch(thunkLoadLikes());
+    };
 
     useEffect(() => {
         fetch('/api/posts/followed_posts')
@@ -94,7 +108,7 @@ function LandingPager() {
                     onClick={() => switchView('following')}>Following</div>
                     </div>                    
                 )}
-                {display.reverse().map((post) => {
+                {[...display].map((post) => {
                     const like = Object.values(likes).find((like) => like.post_id === post.id);
                     const isLiked = !!like;
                     const likeId = like?.id || null;
@@ -133,12 +147,21 @@ function LandingPager() {
                         setModalContent(<FollowModal postId={post.id} userId={post.user_id} isFollowing={isFollowing} followId={followId} existingNote={followNote} closeModal={closeModal}/>)
                     }
 
+                    const openPostModal = () => {
+                        setModalContent(<PostModal postId={post.id} existingTitle={post.title} existingDescription={post.description} closeModal={closeModal} refreshPosts={refreshPosts} />)
+                    }                
+
                     return (
                         <picture key={post.id} className='post_container'>
                             <div className='user_info'>{handleUser()} {sessionUser && sessionUser.id !== post.user_id && (<div className='follow_text' onClick={(e) => {e.stopPropagation(); {openFollowModal()}}}>{isFollowing ? 'Following' : 'Follow'}</div>)}</div>
                             <img src={post.image} alt={post.description} className='posts_img' onClick={handleClick} />
                             <div className='added_info_div'>
                             <div className='description'>{post.description}</div>
+                            {sessionUser && sessionUser.id === post.user_id && (
+                                <div className='manage_like_container'>
+                                 <div className='manage_like_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
+                                </div>
+                            )}
                             <div className='likes_container'> 
                             <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
                             <div className='likes_count'>{post.likes}</div>

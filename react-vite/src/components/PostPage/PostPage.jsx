@@ -5,9 +5,8 @@ import { useModal } from '../../context/Modal';
 import { thunkLoadLikes } from '../../redux/likes';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
-import { FaRegHeart } from "react-icons/fa";
-import { FaRegCommentDots } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
+import PostModal from '../PostModal/PostModal';
+import { FaRegHeart, FaRegCommentDots, FaHeart, FaCog } from "react-icons/fa";
 import './PostPage.css';
 
 function PostPage() {
@@ -19,7 +18,7 @@ function PostPage() {
     const post_id_object = useParams()
     const post_id = post_id_object.post_id
     const likes = useSelector((state) => state.likes);
-
+    const sessionUser = useSelector((state) => state.session.user)
     const like = Object.values(likes).find((like) => like.post_id === post.id);
     const isLiked = !!like;
     const likeId = like?.id || null;
@@ -40,6 +39,20 @@ function PostPage() {
         dispatch(thunkLoadLikes());
     }, [errors, dispatch]);
 
+    const refreshPosts = async () => {
+        fetch(`/api/posts/${post_id}`)
+        .then((res) => res.json())
+        .then((data) => setPost(data))
+        .catch(async (res) => {
+            const data = await res.json();
+            if(data && data.errors) {
+                setErrors(data.errors);
+                console.log(errors)
+            }
+        })   
+        dispatch(thunkLoadLikes());
+    };
+
     const fill_heart = (postId) => {
         setFillHeart(prev => ({
             ...prev,
@@ -57,6 +70,10 @@ function PostPage() {
         setModalContent(<CommentsModal postId={post.id} closeModal={closeModal}/>)
     }
 
+    const openPostModal = () => {
+        setModalContent(<PostModal postId={post.id} existingTitle={post.title} existingDescription={post.description} closeModal={closeModal} refreshPosts={refreshPosts} />)
+      }
+
     return (
         <div className='post_section'>
             <section className='post_section_2'>
@@ -64,6 +81,11 @@ function PostPage() {
                     <img src={post.image} alt={post.description} className='post_img' />
                     <div className='added_info_container'>
                     <div className='post_description'>{post.description}</div>
+                    {sessionUser && sessionUser.id === post.user_id && (
+                        <div className='manage_like_container'>
+                            <div className='manage_like_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
+                        </div>
+                    )}
                     <div className='likes_container'> 
                     <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
                     <div className='likes_count'>{post.likes}</div>

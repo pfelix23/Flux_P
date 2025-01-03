@@ -7,7 +7,7 @@ post_routes = Blueprint("posts", __name__)
 
 @post_routes.route("/")
 def posts():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.created_at.desc()).all()
 
     posts_data = []
 
@@ -48,7 +48,7 @@ def posts():
 @post_routes.route("/current")
 @login_required
 def user_posts():
-    user_posts = Post.query.filter_by(user_id=current_user.id).all()
+    user_posts = Post.query.filter_by(user_id=current_user.id).order_by(Post.created_at.desc()).all()
 
     posts_data = []
 
@@ -89,7 +89,7 @@ def user_posts():
 @post_routes.route("/users/<string:username>")
 @login_required
 def username_posts(username):
-    user_posts = Post.query.join(User).filter(User.username==username).all()
+    user_posts = Post.query.join(User).filter(User.username==username).order_by(Post.created_at.desc()).all()
 
     posts_data = []
 
