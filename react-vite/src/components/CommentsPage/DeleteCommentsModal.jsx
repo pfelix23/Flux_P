@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
+import './CommentsPage.css';
 
 function DeleteCommentsModal({ commentId, refreshComments }) {
     const [comment, setComment] = useState({});
@@ -27,11 +28,13 @@ function DeleteCommentsModal({ commentId, refreshComments }) {
     };
 
     return (
-        <div>
+        <div id="delete_comment_modal">
             <h3>Delete comment?</h3>
-            <p>{comment.comment}</p>
-            <button onClick={handleDelete}>Yes, Delete</button>
-            <button onClick={closeModal}>Cancel</button>
+            <p style={{marginTop: '-5px'}}>{comment.comment}</p>
+            <div className="button_container_delete">
+            <button className="delete_button" onClick={handleDelete}>Yes, Delete</button>
+            <button className="cancel_button"onClick={closeModal}>Cancel</button>
+            </div>
         </div>
     );
 }

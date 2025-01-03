@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkAddFollow, thunkUpdateFollow, thunkDeleteFollow } from "../../redux/follows";
+import '../FollowingPage/FollowingPage.css'
 
 function FollowModal({ userId, isFollowing = false, followId = null, existingNote = "" }) {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ function FollowModal({ userId, isFollowing = false, followId = null, existingNot
       <h2>{isFollowing ? "Edit Follow" : "Follow User"}</h2>
       {errors.error && <p className="error">{errors.error}</p>}
       <form onSubmit={handleSubmit}>
-        <label>
+        <label style={{fontFamily: 'Sour Gummy'}}>
           Add a Note:
           <textarea
             value={note}

@@ -1,6 +1,7 @@
 #create-post-modal {
   padding: 20px;
   width: 400px;
+  border-radius: 50px;
 }
 
 #create-post-modal h2 {

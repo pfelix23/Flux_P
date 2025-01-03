@@ -36,16 +36,24 @@ function CommentsPage() {
             <div className='follows'>
                 {comments.reverse().map((comment) => {
                     return (
-                        <div key={comment.id}>
-                            <div>{comment.comment}</div>
+                        <div key={comment.id} className='comment_div'>
+                            <div className='comment'>{comment.comment}</div>
+                            <div className='modal'>
                             <OpenModalMenuItem
                                 itemText="Edit"
                                 modalComponent={<EditCommentsModal commentId={comment.id}/>}
+                                className="modal"
+                                
+                                
                             />
+                            </div>
+                            <div className='modal'>
                             <OpenModalMenuItem
                                 itemText="Delete"
                                 modalComponent={<DeleteCommentsModal commentId={comment.id} refreshComments={refreshComments}/>}
+                                className="modal"
                             />
+                            </div>
                         </div>
                     )
                 })}
