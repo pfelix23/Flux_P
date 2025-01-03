@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './UserPage.css';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import { useDispatch, useSelector } from 'react-redux';
+import { useModal } from '../../context/Modal';
+import { thunkLoadLikes } from '../../redux/likes';
+import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import FollowModal from '../FollowModal/FollowModal';
+import { FaRegHeart } from "react-icons/fa";
+import { FaRegCommentDots } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
+import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
+import './UserPage.css';
 
 function UserPage() {
     const [user, setUser] = useState(null);
@@ -13,6 +20,10 @@ function UserPage() {
     const [errors, setErrors] = useState();
     const navigate = useNavigate();
     const { username } = useParams();
+    const [fillHeart, setFillHeart] = useState('');
+    const { setModalContent, closeModal } = useModal()
+    const likes = useSelector((state) => state.likes);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         fetch(`/api/users/${username}`)
@@ -33,6 +44,7 @@ function UserPage() {
                     console.log(errors);
                 }
             });
+            dispatch(thunkLoadLikes());
 
         fetch(`/api/follows/${username}`)
             .then((res) => res.json())
@@ -60,6 +72,15 @@ function UserPage() {
             });
     };
 
+    const fill_heart = (postId) => {
+        setFillHeart(prev => ({
+            ...prev,
+            [postId]: !prev[postId]
+        }))
+      } 
+
+    const heart = (postId) => fillHeart[postId] ? <FaHeart /> : <FaRegHeart />
+
     return (
         <div className="posts_section">
             <h1>{username}</h1>
@@ -85,8 +106,22 @@ function UserPage() {
             ) : (
                 <section className="posts_section">
                     {[...posts].reverse().map((post) => {
+
+                    const like = Object.values(likes).find((like) => like.post_id === post.id);
+                    const isLiked = !!like;
+                    const likeId = like?.id || null;
+                    const likeNote = like?.note || "";
+
+                    const openLikesModal = () => {
+                    setModalContent(<LikeModal postId={post.id} isLiked={isLiked} likeId={likeId} existingNote={likeNote} closeModal={closeModal}/>)
+                    }
+
+                    const openCommentModal = () => {
+                    setModalContent(<CommentsModal postId={post.id} closeModal={closeModal}/>)
+                    }                        
                         return (
-                            <picture key={post.id}>
+                            <picture key={post.id} className='post_picture'>
+                                <div className='user_info'>{post.username}</div>
                                 <img
                                     onClick={() => navigate(`/posts/${post.id}`)}
                                     src={post.image}
@@ -94,14 +129,15 @@ function UserPage() {
                                     className="posts_img"
                                 />
                                 <div className="added_info">
-                                    <div>{post.username}</div>
-                                    <div>{post.description}</div>
-                                    <div>{post.likes}</div>
-                                    <div>{post.comment_count}</div>
-                                    <OpenModalMenuItem
-                                        itemText="💬"
-                                        modalComponent={<CommentsModal postId={post.id} />}
-                                    />
+                                    <div className='description'>{post.description}</div>
+                                    <div className='likes_container'> 
+                                        <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
+                                        <div className='likes_count'>{post.likes}</div>
+                                    </div>
+                                    <div className='comment_container'>
+                                        <div className='comment_icon' onClick={(e) => {e.stopPropagation();openCommentModal()}}><FaRegCommentDots /></div>
+                                        <div className='comment_count'>{post.comment_count}</div>
+                                    </div>
                                 </div>
                             </picture>
                         );

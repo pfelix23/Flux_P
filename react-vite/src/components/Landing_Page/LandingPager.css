@@ -1,12 +1,36 @@
-.post_section_2 {
+.posts_section {
+    overflow-y: scroll;
+  }
+
+  .posts_section_2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow-y: scroll; 
+    border-left: solid #222222 .5px;
+    border-right: solid #222222 .5px;
 
   }
 
-  .post_picture {
+  .posts_section::-webkit-scrollbar,
+  .posts_section_2::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  .posts_section::-webkit-scrollbar-track,
+  .posts_section_2::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .posts_section::-webkit-scrollbar-thumb,
+  .posts_section_2::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+
+  .post_container {
     width: 695px;
     display: flex;
     justify-content: center;
@@ -14,16 +38,51 @@
     flex-direction: column;
   }
 
-  .post_img {
+  .posts_img {
     height: 75vh;
     width: 90%;
+    object-fit: cover;
   } 
 
-  .post_img:hover {
+  .posts_img:hover {
     cursor: pointer;
   }
 
-  .added_info_container {
+  .user_info {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items:flex-start;
+    background-color: #222222;
+    height: 50px;
+    margin-top: 15px;
+    margin-bottom: -4px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    width: 90%;
+    position: sticky;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 5px;
+    color: white;
+    font-family: 'Sour Gummy';
+  }
+
+  .follow_text{
+    font-family: 'Sour Gummy';
+    padding-left: 5px;
+    color: #46976A;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 1px;
+  }
+
+  .follow_text:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .added_info_div {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -40,7 +99,7 @@
 
   }
 
-  .post_added_info {
+  .added_info {
     font-family: 'Sour Gummy';
     color: white;
     object-fit: contain;
@@ -48,7 +107,7 @@
 
   }
 
-  .post_description {
+  .description {
     font-family: 'Sour Gummy';
     color: white;
     object-fit: contain;
@@ -76,11 +135,13 @@
   .heart_icon {
     margin-right: 5px;
     cursor: pointer;
+    color: red;
   }
 
   .comment_icon {
     margin-right: 5px;
     cursor: pointer;
+    color: white;
   }
 
   .likes_count {
@@ -122,23 +183,35 @@
     margin-bottom: 2px;
 
   }
-
-  .user_info {
+  .landing_page_button_container {
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items:flex-start;
-    background-color: #222222;
-    height: 50px;
-    margin-top: 15px;
-    margin-bottom: -4px;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    width: 90%;
-    position: sticky;
-    padding-left: 10px;
-    padding-right: 5px;
-    padding-top: 5px;
-    color: white;
-    font-family: 'Sour Gummy';
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    border-bottom: solid .5px #222222;
   }
+
+  .landing_page_button {
+  display: flex;
+  justify-content: center;
+  font-family: 'Sour Gummy';
+  font-size: 30px;
+  width: 44%;
+  border-radius: 12px;
+  background-color: #000002;
+  color:white;
+  margin: 1px;
+  }
+
+  .landing_page_button.active {
+    background-color: #46976A;
+  }
+
+  .landing_page_button:hover {
+    cursor: pointer;
+    background-color: #46976A;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  } 

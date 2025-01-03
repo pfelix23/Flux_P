@@ -43,18 +43,20 @@ function FollowingPage() {
                 ) : (
                     follows.reverse().map((follow) => {
                         return (
-                            <div key={follow.id}>
-                                <p><a href={`/${follow.following_username}`}>{follow.following_username}</a></p>
-                                <p>{follow.note}</p>
-                                <OpenModalMenuItem
-                                    itemText="Manage"
-                                    modalComponent={<FollowModal 
-                                        followId={follow.id}
-                                        userId={follow.following_id}
-                                        isFollowing={true}
-                                        refreshFollows={refreshFollows}
-                                        existingNote={follow.note}/>}
-                                />
+                            <div key={follow.id} className='follow_div'>
+                                <div><a href={`/${follow.following_username}`} id='user_tag'>{follow.following_username}</a></div>
+                                <div className=''>{follow.note}</div>
+                                <div className='follow-modal'>
+                                    <OpenModalMenuItem
+                                        itemText="Manage"
+                                        modalComponent={<FollowModal 
+                                            followId={follow.id}
+                                            userId={follow.following_id}
+                                            isFollowing={true}
+                                            refreshFollows={refreshFollows}
+                                            existingNote={follow.note}/>}
+                                    />
+                                </div>
                             </div>
                         );
                     })

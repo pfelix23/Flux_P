@@ -27,9 +27,9 @@ function CreatePostModal() {
 
   return (
     <div id="create-post-modal">
-      <h2>Create a New Post</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
+      <h2 style={{fontFamily: 'Sour Gummy'}}>Create a New Post</h2>
+      <form onSubmit={handleSubmit} className='form'>
+        <label style={{fontFamily: 'Sour Gummy'}}>
           Title:
           <input
             type="text"
@@ -39,7 +39,7 @@ function CreatePostModal() {
             placeholder="Optional"
           />
         </label>
-        <label>
+        <label style={{fontFamily: 'Sour Gummy'}}>
           Image URL:
           <input
             type="url"
@@ -48,7 +48,7 @@ function CreatePostModal() {
             required
           />
         </label>
-        <label>
+        <label style={{fontFamily: 'Sour Gummy'}}>
           Description:
           <textarea
             value={description}
@@ -56,10 +56,10 @@ function CreatePostModal() {
             required
           />
         </label>
-        <button type="submit">
+        <button type="submit" style={{fontFamily: 'Sour Gummy'}}>
           Post
         </button>
-        <button type="button" onClick={closeModal}>
+        <button type="button" onClick={closeModal} style={{fontFamily: 'Sour Gummy'}}>
           Cancel
         </button>
       </form>
