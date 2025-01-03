@@ -40,39 +40,42 @@ function LikesPage() {
     return (
         <div className='posts_section'>
             <section className='posts_section'>
-            <h1>Likes</h1>
-                {likes.reverse().map((like) => {
-                    return (
+                <h1>Likes</h1>
+                {likes.length === 0 ? (
+                    <p>You have not liked any posts.</p> 
+                ) : (
+                    likes.reverse().map((like) => (
                         <div key={like.post}>
                             <div><a href={`/${like.poster_username}`}>{like.poster_username}</a></div>
-                            <img onClick={() => navigate(`/posts/${like.post_id}`)} src={like.image} alt={like.description} className='likes_img'></img>
+                            <img 
+                                onClick={() => navigate(`/posts/${like.post_id}`)} 
+                                src={like.image} 
+                                alt={like.description} 
+                                className='likes_img'
+                            />
                             <div>{like.description}</div>
                             <div>{like.likes}</div>
                             <div>{like.note}</div>
                             <OpenModalMenuItem
-                            itemText="💬"
-                            modalComponent={<CommentsModal postId={like.post_id}/>}
+                                itemText="💬"
+                                modalComponent={<CommentsModal postId={like.post_id} />}
                             />
                             <OpenModalMenuItem
-                            itemText="Manage"
-                            modalComponent={<LikeModal
-                                postId={like.post_id}
-                                isLiked={true}
-                                likeId={like.id}
-                                existingNote={like.note}
-                                refreshLikes={refreshLikes}
+                                itemText="Manage"
+                                modalComponent={<LikeModal
+                                    postId={like.post_id}
+                                    isLiked={true}
+                                    likeId={like.id}
+                                    existingNote={like.note}
+                                    refreshLikes={refreshLikes}
                                 />}
-                            /> 
+                            />
                         </div>
-                    );
-                })
-
-              }
-
+                    ))
+                )}
             </section>
-
         </div>
-    )
+    );
 
 }
 
