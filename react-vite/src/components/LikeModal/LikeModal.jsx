@@ -56,6 +56,7 @@ function LikeModal({ postId, isLiked = false, likeId = null, existingNote = "", 
       {errors.error && <p className="error">{errors.error}</p>}
       <form onSubmit={handleSubmit}>
         <label >
+          Note:
           <textarea
             value={note}
             onChange={handleInputChange} 

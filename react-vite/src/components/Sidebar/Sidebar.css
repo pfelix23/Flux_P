@@ -61,3 +61,11 @@ font-family: 'Sour Gummy';
   text-decoration: underline;
   color: white;
 }
+ #signup_message {
+  font-family: 'Sour Gummy';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+ }
