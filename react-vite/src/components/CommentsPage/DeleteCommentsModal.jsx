@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useModal } from "../../context/Modal";
-// import './CommmentsPage.css';
+import './CommentsPage.css';
 
 function DeleteCommentsModal({ commentId, refreshComments }) {
     const [comment, setComment] = useState({});

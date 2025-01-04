@@ -34,7 +34,7 @@
     margin-bottom: 15px;
     border-bottom-right-radius: 5px;
     border-bottom-left-radius: 5px;
-    width: 90%;
+    width: 91%;
     position: sticky;
     object-fit: contain;  
 
@@ -141,4 +141,29 @@
     padding-top: 5px;
     color: white;
     font-family: 'Sour Gummy';
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Sour Gummy';
+    justify-content: space-evenly;
+    width: 100%;
+    border-bottom: solid #222222 .5px;
+  }
+
+  #follow_container {
+    list-style-type: none;
+    margin-left: 4.5%;
+    color: #547375;
+  }
+
+  #follow_container:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  #followNote {
+    margin-left: 2%;
+    color: white
   }

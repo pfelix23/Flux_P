@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import { thunkLoadFollows } from '../../redux/follows';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
-import OpenModalMenuItem from '../Navigation/OpenModalMenuItem';
 import CreatePostModal from '../CreatePostModal/CreatePostModal';
 import FollowModal from '../FollowModal/FollowModal';
 import LoginFormModal from '../LoginFormModal/LoginFormModal';
@@ -29,7 +28,6 @@ function Sidebar() {
 
     dispatch(thunkLoadFollows());
   }, [dispatch]);
-  
 
   return (
     <section id="sidebar">
@@ -43,6 +41,14 @@ function Sidebar() {
         <h3>New Users</h3>
         <ul>
           {newUsers.map((newUser) => {
+            const follow_modal = () => {setModalContent(
+              <FollowModal
+                userId={newUser.id}
+                isFollowing={isFollowing}
+                followId={followId}
+                existingNote={followNote}
+              />
+            )}
             if (user && newUser.id === user.id) {
               return (
                 <li
@@ -91,28 +97,31 @@ function Sidebar() {
             const followNote = follow.note || "";
 
             return (
-              <li key={newUser.id}>
-              <a href={`/${newUser.username}`}>{newUser.username}</a>
-              <span className="follow_text">
-                <OpenModalMenuItem
-                  itemText={isFollowing ? "Following" : "Follow"}
-                  modalComponent={
-                    <FollowModal 
-                      userId={newUser.id}
-                      isFollowing={isFollowing}
-                      followId={followId}
-                      existingNote={followNote}
-                    />
-                  }
-                />
-              </span>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  </section>
-);
+              <li
+                key={newUser.id}
+                // onClick={() =>
+                //   setModalContent(
+                //     <FollowModal
+                //       userId={newUser.id}
+                //       isFollowing={isFollowing}
+                //       followId={followId}
+                //       existingNote={followNote}
+                //     />
+                //   )
+                // }
+              >
+                <div id='user_follow_div'> <div id='new_user' onClick={() => navigate(`/${newUser.username}`)}>{newUser.username}</div>
+                <span className='follow_text' onClick={() => follow_modal()}>
+                  {isFollowing ? "Following" : "Follow"}
+                </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
 }
 
 export default Sidebar;

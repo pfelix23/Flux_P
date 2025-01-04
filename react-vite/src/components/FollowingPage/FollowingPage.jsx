@@ -45,8 +45,7 @@ function FollowingPage() {
                         return (
                             <div key={follow.id} className='follow_div'>
                                 <div><a href={`/${follow.following_username}`} id='user_tag'>{follow.following_username}</a></div>
-                                <div className=''>{follow.note}</div>
-                                <div className='follow-modal'>
+                                <div className='follow-modal_'>
                                     <OpenModalMenuItem
                                         itemText="Manage"
                                         modalComponent={<FollowModal 
@@ -57,6 +56,7 @@ function FollowingPage() {
                                             existingNote={follow.note}/>}
                                     />
                                 </div>
+                                <div className='noted'>{follow.note}</div>
                             </div>
                         );
                     })

@@ -1,4 +1,4 @@
-.comments {
+#like-modal {
     width: 400px;
     padding: 20px;
     display: flex;
@@ -8,9 +8,10 @@
     font-family: 'Sour Gummy';
 }
 
-.comment_button {
+.like_buttons {
     padding: 8px 12px;
     cursor: pointer;
     font-family: 'Sour Gummy';
-    margin-top: 3%;
+    margin-top: 3px;
 }
+

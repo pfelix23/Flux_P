@@ -51,8 +51,7 @@
   .user_info {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
-    align-items:flex-start;
+    justify-content:space-between;
     background-color: #222222;
     height: 50px;
     margin-top: 15px;
@@ -215,3 +214,19 @@
   html {
     scroll-behavior: smooth;
   } 
+
+  .comment_dots {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: .5%;
+    margin-right: 1.5%;
+  }
+
+  .comment_dots:hover {
+    cursor: pointer;
+  }
+
+  .comment_dots_container {
+    width: 100%;
+  }

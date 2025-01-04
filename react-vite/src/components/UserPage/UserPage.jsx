@@ -57,7 +57,7 @@ function UserPage() {
                 console.log(err);
             });
 
-    }, [username]);
+    }, [username, dispatch, errors]);
 
     const refreshFollows = () => {
         fetch(`/api/follows/${username}`)
@@ -83,8 +83,10 @@ function UserPage() {
 
     return (
         <div className="posts_section">
-            <h1>{username}</h1>
-
+            <div className='header'>
+            <h1 style={{marginLeft:'5%', marginBottom:'-.25%'}}>{username}&apos;s page</h1>
+            <div className='follow_div'>
+            <div id='follow_container'>
             {user && (
                 <OpenModalMenuItem
                     itemText={isFollowing ? "Manage Follow" : "Follow"}
@@ -98,8 +100,11 @@ function UserPage() {
                     }
                 />
             )}
-
-            <p>{followNote}</p>
+            </div>
+            <div id='followNote'>{followNote}</div>
+            </div>
+            {/* <div>{followNote}</div> */}
+            </div>
 
             {posts.length === 0 ? (
                 <p>This user has not made any posts.</p>
@@ -128,7 +133,7 @@ function UserPage() {
                                     alt={post.description}
                                     className="posts_img"
                                 />
-                                <div className="added_info">
+                                <div className="added_info_container">
                                     <div className='description'>{post.description}</div>
                                     <div className='likes_container'> 
                                         <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>

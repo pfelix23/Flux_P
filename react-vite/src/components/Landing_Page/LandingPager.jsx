@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux';
-import { FaRegHeart, FaRegCommentDots, FaHeart, FaCog } from "react-icons/fa";
+import { FaRegHeart, FaRegCommentDots, FaHeart } from "react-icons/fa";
+import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import { thunkLoadLikes } from '../../redux/likes';
 import { thunkLoadFollows } from '../../redux/follows';
 import LikeModal from '../LikeModal/LikeModal';
@@ -81,6 +82,7 @@ function LandingPager() {
         })
     }, [sessionUser, errors]); 
     
+    
     const switchView = (viewType) => {
         setView(viewType)
         setIsActive(viewType)
@@ -133,8 +135,6 @@ function LandingPager() {
                       }
                     }
 
-                    // const isFollowing = sessionPosts.some((sessionPost) => sessionPost.id === post.id);
-
                     const openLikesModal = () => {
                         setModalContent(<LikeModal postId={post.id} isLiked={isLiked} likeId={likeId} existingNote={likeNote} closeModal={closeModal}/>)
                     }
@@ -153,15 +153,15 @@ function LandingPager() {
 
                     return (
                         <picture key={post.id} className='post_container'>
-                            <div className='user_info'>{handleUser()} {sessionUser && sessionUser.id !== post.user_id && (<div className='follow_text' onClick={(e) => {e.stopPropagation(); {openFollowModal()}}}>{isFollowing ? 'Following' : 'Follow'}</div>)}</div>
+                            <div className='user_info'>{handleUser()} {sessionUser && sessionUser.id !== post.user_id && (<div className='follow_text' onClick={(e) => {e.stopPropagation(); {openFollowModal()}}}>{isFollowing ? 'Following' : 'Follow'}</div>)}
+                            {sessionUser && sessionUser.id === post.user_id && (
+                                <div className='comment_dots_container'>
+                                    <div className='comment_dots' onClick={(e) => {e.stopPropagation();openPostModal()}}><PiDotsThreeOutlineFill /></div>
+                                </div>
+                            )}</div>
                             <img src={post.image} alt={post.description} className='posts_img' onClick={handleClick} />
                             <div className='added_info_div'>
                             <div className='description'>{post.description}</div>
-                            {sessionUser && sessionUser.id === post.user_id && (
-                                <div className='manage_like_container'>
-                                 <div className='manage_like_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
-                                </div>
-                            )}
                             <div className='likes_container'> 
                             <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
                             <div className='likes_count'>{post.likes}</div>

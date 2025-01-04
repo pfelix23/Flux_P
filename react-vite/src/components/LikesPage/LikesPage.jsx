@@ -127,13 +127,13 @@ function LikesPage() {
                             setModalContent(<PostModal postId={like.post_id} existingTitle={like.title} existingDescription={like.description} closeModal={closeModal} refreshPosts={refreshPosts} />)
                           }
 
-                        const followButton = followStatus[like.poster_username]?.is_following ? "Manage Follow" : "Follow";
+                        const followButton = followStatus[like.poster_username]?.is_following ? "Following" : "Follow";
 
                         return (
                             <div key={like.post} className='post_container'>
                                 <div className='user_info'>
-                                    <a href={`/${like.poster_username}`} id='user_a_tag'>{like.poster_username}</a>
-                                    <button onClick={() => openFollowModal(like)}>{followButton}</button>
+                                    <a style={{paddingRight:'.8%'}} href={`/${like.poster_username}`} id='user_a_tag'>{like.poster_username}</a>
+                                    <div id='follow_me' onClick={() => openFollowModal(like)}>{followButton}</div>
                                 </div>
                                 <img 
                                     onClick={() => navigate(`/posts/${like.post_id}`)} 

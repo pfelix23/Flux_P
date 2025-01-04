@@ -37,6 +37,19 @@ div > h1 {
     align-items: flex-start;
     flex-direction: column;
 }
+
+.follow-modal_ {
+  color: #547375;
+}
+
+.follow-modal_:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.noted {
+  margin-left: 1.3%;
+}
 div > h2 {
     font-family: 'Sour Gummy';
 }

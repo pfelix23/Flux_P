@@ -6,7 +6,8 @@ import { thunkLoadLikes } from '../../redux/likes';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import PostModal from '../PostModal/PostModal';
-import { FaRegHeart, FaRegCommentDots, FaHeart, FaCog } from "react-icons/fa";
+import { FaRegHeart, FaRegCommentDots, FaHeart } from "react-icons/fa";
+import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import "./ProfilePage.css";
 function ProfilePage() {
   const [posts, setPosts] = useState([]);
@@ -68,7 +69,7 @@ function ProfilePage() {
   const heart = (postId) => fillHeart[postId] ? <FaHeart /> : <FaRegHeart />
 
   return (
-    <div className="posts_section">
+    <div className="posts_section_2"><div id="h1_container"><h1 id="h1">{sessionUser.username}&apos;s profile</h1></div>
       <section className="posts_section">
         {[...posts].reverse().map((post) => {
           const like = Object.values(likes).find((like) => like.post_id === post.id);
@@ -91,12 +92,13 @@ function ProfilePage() {
 
           return (
             <picture key={post.id} className="post_container">
-              <div className='user_info'>{sessionUser.username}</div>
+              <div className='user_info'>{sessionUser.username}
+              <div className='manage_post_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><PiDotsThreeOutlineFill /></div>
+              </div>
               <img src={post.image} alt={post.description} className='posts_img' onClick={() => navigate(`/posts/${post.id}`)} />
               <div className='added_info_div'>
                 <div className='description'>{post.description}</div>
                 <div className='manage_post_container'>
-                <div className='manage_post_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
                 </div>
                 <div className='likes_container'> 
                 <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>

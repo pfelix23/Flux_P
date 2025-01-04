@@ -1,8 +1,10 @@
-.post_section_2 {
-    display: flex;
+.posts_section {
+    /* display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
+    border-left: solid #222222 .5px;
+    border-right: solid #222222 .5px;
 
   }
 
@@ -141,4 +143,32 @@
     padding-top: 5px;
     color: white;
     font-family: 'Sour Gummy';
+  }
+
+  .manage_post_icon {
+    width: 100%;
+    margin-top: .5%;
+    margin-right: 1.5%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .manage_post_icon:hover {
+    cursor: pointer;
+  }
+
+  #h1 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    font-family: 'Sour Gummy';
+    margin-left: 4%;
+    width: 100%;
+    height: fit-content;
+  }
+
+  #h1_container {
+    width: 100%;
+    border-bottom: solid .5px #222222;
+    height: fit-content;
   }

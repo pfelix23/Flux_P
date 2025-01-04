@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { thunkAddLike, thunkUpdateLike, thunkDeleteLike } from "../../redux/likes";
+import './LikeModal.css'
 
 function LikeModal({ postId, isLiked = false, likeId = null, existingNote = "", refreshLikes}) {
   const dispatch = useDispatch();
@@ -51,24 +52,25 @@ function LikeModal({ postId, isLiked = false, likeId = null, existingNote = "", 
 
   return (
     <div id="like-modal">
-      <h2>{isLiked ? "Edit Like" : "Like Post"}</h2>
+      <h2 style={{marginBottom:'-.2%'}}>{isLiked ? "Edit Like" : "Like Post"}</h2>
       {errors.error && <p className="error">{errors.error}</p>}
       <form onSubmit={handleSubmit}>
-        <label>
-          Add a Note:
+        <label >
           <textarea
             value={note}
             onChange={handleInputChange} 
-            placeholder="Write a note..."
+            placeholder="Add a note..."
           />
         </label>
-        {!isLiked && <button type="submit">Like</button>} 
+        <div id="button_box">
+        {!isLiked && <button className="like_buttons" type="submit">Like</button>} 
         {isLiked && (
-          <>
-            <button type="button" onClick={handleUpdate}>Edit</button>
-            <button type="button" onClick={handleUnlike}>Unlike</button>
-          </>
+          <div>
+            <button className="like_buttons" type="button" onClick={handleUpdate}>Edit</button>
+            <button className="like_buttons" type="button" onClick={handleUnlike}>Unlike</button>
+          </div>
         )}
+        </div>
       </form>
     </div>
   );
