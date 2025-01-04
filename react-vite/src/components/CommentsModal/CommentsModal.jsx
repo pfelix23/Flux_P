@@ -47,7 +47,7 @@ function CommentsModal({ postId }) {
     };
 
     return (
-        <div className='comments'>
+        <div id='comments'>
             <h2 style={{marginBottom:'-.5%'}}>Post Comment</h2>
             <div >
                 <div className='comments_list'>

@@ -6,19 +6,21 @@ import { thunkLoadLikes } from '../../redux/likes';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import PostModal from '../PostModal/PostModal';
-import { FaRegHeart, FaRegCommentDots, FaHeart, FaCog } from "react-icons/fa";
+import { FaRegHeart, FaRegCommentDots, FaHeart } from "react-icons/fa";
+import { PiDotsThreeOutlineFill } from "react-icons/pi";
 import './PostPage.css';
 
 function PostPage() {
     const [post, setPost] = useState([]);
     const [errors, setErrors] = useState();
     const [fillHeart, setFillHeart] = useState('');
-    const { setModalContent, closeModal } = useModal()
+    const { setModalContent, closeModal } = useModal();
+    const [users, setUsers] = useState();
     const dispatch = useDispatch();
-    const post_id_object = useParams()
-    const post_id = post_id_object.post_id
+    const post_id_object = useParams();
+    const post_id = post_id_object.post_id;
     const likes = useSelector((state) => state.likes);
-    const sessionUser = useSelector((state) => state.session.user)
+    const sessionUser = useSelector((state) => state.session.user);
     const like = Object.values(likes).find((like) => like.post_id === post.id);
     const isLiked = !!like;
     const likeId = like?.id || null;
@@ -53,6 +55,19 @@ function PostPage() {
         dispatch(thunkLoadLikes());
     };
 
+    useEffect(() => {
+        fetch('/api/users/others')
+        .then((res) => res.json())
+        .then((data) => setUsers(data.Users))
+        .catch(async (res) => {
+            const data = await res.json();
+            if(data && data.errors) {
+                setErrors(data.errors);
+                console.log(errors)
+            }
+        })
+    }, [sessionUser, errors]); 
+
     const fill_heart = (postId) => {
         setFillHeart(prev => ({
             ...prev,
@@ -74,18 +89,26 @@ function PostPage() {
         setModalContent(<PostModal postId={post.id} existingTitle={post.title} existingDescription={post.description} closeModal={closeModal} refreshPosts={refreshPosts} />)
       }
 
+    const handleUser = () => {
+    const user = users?.find((user) => user.id === post.user_id);
+        if(user) {
+        return user.username
+    }
+    }
+
     return (
         <div className='post_section'>
             <section className='post_section_2'>
                 <picture className='post_picture'>
+                <div className='user_info'> {handleUser()}
+                    {sessionUser && sessionUser.id === post.user_id && (
+                        <div className='comment_dots_container'>
+                            <div className='comment_dots' onClick={(e) => {e.stopPropagation();openPostModal()}}><PiDotsThreeOutlineFill /></div>
+                        </div>
+                    )}</div>
                     <img src={post.image} alt={post.description} className='post_img' />
                     <div className='added_info_container'>
                     <div className='post_description'>{post.description}</div>
-                    {sessionUser && sessionUser.id === post.user_id && (
-                        <div className='manage_like_container'>
-                            <div className='manage_like_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
-                        </div>
-                    )}
                     <div className='likes_container'> 
                     <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
                     <div className='likes_count'>{post.likes}</div>

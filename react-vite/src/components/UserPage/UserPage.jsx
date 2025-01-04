@@ -126,7 +126,7 @@ function UserPage() {
                     }                        
                         return (
                             <picture key={post.id} className='post_picture'>
-                                <div className='user_info'>{post.username}</div>
+                                <div className='user_info'>{username}</div>
                                 <img
                                     onClick={() => navigate(`/posts/${post.id}`)}
                                     src={post.image}

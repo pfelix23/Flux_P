@@ -36,7 +36,7 @@ function FollowingPage() {
 
     return (
         <div>
-            <h1>Follows</h1>
+            <h1 style={{marginLeft:'2.5px'}}>Follows</h1>
             <div className='follows'>
                 {follows.length === 0 ? (
                     <p>You are not following any users.</p> 

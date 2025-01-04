@@ -67,7 +67,7 @@ function Sidebar() {
                   key={newUser.id}
                   onClick={() =>
                     setModalContent(
-                      <div>
+                      <div id='signup_message'>
                         <LoginFormModal />
                         <p>
                           Don&apos;t have an account yet?{" "}

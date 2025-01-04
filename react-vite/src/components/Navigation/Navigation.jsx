@@ -24,6 +24,7 @@ function Navigation() {
 
   const handleLogout = () => {
     dispatch(thunkLogout());
+    navigate('/')
   };
 
   return (
