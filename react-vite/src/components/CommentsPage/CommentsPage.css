@@ -1,0 +1,86 @@
+.comment_div {
+    width: 695px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    font-family: 'Sour Gummy';
+    list-style-type: none;
+    padding: 5px;
+    margin-right: 5px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: white;
+
+}
+
+div > h1 {
+    font-family: 'Sour Gummy';
+}
+
+.comment {
+    margin-right: 15px;
+}
+
+.modal {
+    color: #547375;
+    margin-right: 5px;
+}
+
+.modal:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#edit_comment_modal {
+    width: 400px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+div > h2 {
+    font-family: 'Sour Gummy';
+}
+
+.edit_button {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Sour Gummy';
+}
+
+.edit_button_box {
+    padding-top: 15px ;
+}
+
+#delete_comment_modal {
+    width: 400px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    font-family: 'Sour Gummy';
+}
+
+.delete_button {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Sour Gummy';
+    margin-right: 10px;
+}
+
+
+.cancel_button {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Sour Gummy';
+}
+
+.button_container_delete {
+    display: flex;
+    flex-direction: row;
+}
+

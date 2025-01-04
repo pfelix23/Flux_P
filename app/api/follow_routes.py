@@ -86,3 +86,27 @@ def get_following():
     """
     follows = Follow.query.filter_by(follower_id=current_user.id).order_by(Follow.created_at.desc()).all()
     return {'follows': [follow.to_dict() for follow in follows]}
+
+
+@follow_routes.route('/<string:username>', methods=['GET'])
+@login_required
+def get_follow_data(username):
+    """
+    Checks if the current user is following by username and returns the follow note.
+    """
+    followed_user = User.query.filter_by(username=username).first()
+    if not followed_user:
+        return jsonify({"error": "User not found"}), 404
+
+    existing_follow = Follow.query.filter_by(follower_id=current_user.id, following_id=followed_user.id).first()
+    
+    if existing_follow:
+        return jsonify({
+            "is_following": True,
+            "note": existing_follow.note  
+        }), 200
+    else:
+        return jsonify({
+            "is_following": False,
+            "note": ""
+        }), 200

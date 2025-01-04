@@ -7,7 +7,7 @@ post_routes = Blueprint("posts", __name__)
 
 @post_routes.route("/")
 def posts():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.created_at.desc()).all()
 
     posts_data = []
 
@@ -48,7 +48,7 @@ def posts():
 @post_routes.route("/current")
 @login_required
 def user_posts():
-    user_posts = Post.query.filter_by(user_id=current_user.id).all()
+    user_posts = Post.query.filter_by(user_id=current_user.id).order_by(Post.created_at.desc()).all()
 
     posts_data = []
 
@@ -89,7 +89,7 @@ def user_posts():
 @post_routes.route("/users/<string:username>")
 @login_required
 def username_posts(username):
-    user_posts = Post.query.join(User).filter(User.username==username).all()
+    user_posts = Post.query.join(User).filter(User.username==username).order_by(Post.created_at.desc()).all()
 
     posts_data = []
 
@@ -202,7 +202,6 @@ def create_post():
 @post_routes.route("/<int:post_id>/update", methods=["PUT"])
 @login_required
 def edit_post(post_id):
-
     data = request.get_json()
 
     post = Post.query.get(post_id)
@@ -210,28 +209,26 @@ def edit_post(post_id):
     if not post:
         return jsonify({"error": "post couldn't be found"})
 
-    image = data.get("image")
     description = data.get("description")
     title = data.get("title")
 
-    if not image or not description:
+    if not description:
         return jsonify(
             {
                 "message": "Bad Request",
                 "errors": {
-                    "image": "Image is required",
                     "description": "Description is required",
                 },
             }
         )
 
-    post.image = image
     post.description = description
     post.title = title
 
     db.session.commit()
 
     return jsonify(post.to_dict())
+
 
 
 @post_routes.route("/<int:post_id>", methods=["DELETE"])

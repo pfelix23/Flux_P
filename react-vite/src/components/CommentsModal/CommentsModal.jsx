@@ -47,9 +47,9 @@ function CommentsModal({ postId }) {
     };
 
     return (
-        <div>
-            <h3>Recent Comments</h3>
-            <div className='comments'>
+        <div className='comments'>
+            <h2 style={{marginBottom:'-.5%'}}>Post Comment</h2>
+            <div >
                 <div className='comments_list'>
                     {displayedComments.map((comment) => {
                         return (
@@ -68,17 +68,16 @@ function CommentsModal({ postId }) {
                 </div>
 
                 <div className='create_comment'>
-                    <input
+                    <textarea
                         type="text"
                         value={newComment}
                         onChange={(e) => setNewComment(e.target.value)}
                         placeholder="Write here..."
                     />
-
-                    <button onClick={createComment}>
-                        Comment
-                    </button>
                 </div>
+                <button className="comment_button" onClick={createComment}>
+                        Comment
+                </button>
             </div>
         </div>
     );
