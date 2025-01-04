@@ -1,6 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_login import login_required, current_user
 from app.models import Post, Like, Comment, User, Follow, db
+from app.s3_helpers import upload_file_to_s3, get_unique_filename, remove_file_from_s3
 
 post_routes = Blueprint("posts", __name__)
 
@@ -173,10 +174,9 @@ def user_post(post_id):
 @login_required
 def create_post():
 
-    data = request.get_json()
-    image = data.get("image")
-    description = data.get("description")
-    title = data.get("title")
+    title = request.form.get("title")
+    description = request.form.get("description")
+    image = request.files.get("image")
 
     if not image or not description:
         return jsonify(
@@ -187,10 +187,21 @@ def create_post():
                     "description": "Description is required",
                 },
             }
-        )
+        ), 400
+
+    image.filename = get_unique_filename(image.filename)
+    upload = upload_file_to_s3(image)
+
+    if "errors" in upload:
+        return jsonify(upload), 400
+
+    image_url = upload["url"]
 
     new_post = Post(
-        user_id=current_user.id, image=image, description=description, title=title
+        user_id=current_user.id,
+        image=image_url,
+        description=description,
+        title=title
     )
 
     db.session.add(new_post)
@@ -238,12 +249,18 @@ def delete_post(post_id):
     post = Post.query.get(post_id)
 
     if not post:
-        return jsonify({"error": "post couldn't be found"})
+        return jsonify({"error": "Post couldn't be found"}), 404
+
+    if post.image:
+        delete_result = remove_file_from_s3(post.image)
+
+        if delete_result is not True:
+            return jsonify(delete_result), 500
 
     db.session.delete(post)
     db.session.commit()
 
-    return jsonify({"message": "Successfully deleted"})
+    return jsonify({"message": "Successfully deleted"}), 200
 
 
 @post_routes.route("/<int:post_id>/comments")
