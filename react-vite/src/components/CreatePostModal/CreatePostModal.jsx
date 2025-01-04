@@ -6,17 +6,25 @@ import './CreatePostModal.css';
 
 function CreatePostModal() {
   const [title, setTitle] = useState('');
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState(null);
   const [description, setDescription] = useState('');
+  const [loading, setLoading] = useState(false);
   const { closeModal } = useModal();
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const response = await dispatch(
-      thunkCreatePost({ title, image, description })
-    );
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    if (image) formData.append('image', image);
+
+    setLoading(true);
+
+    const response = await dispatch(thunkCreatePost(formData));
+
+    setLoading(false);
 
     if (!response.errors) {
       closeModal();
@@ -28,7 +36,11 @@ function CreatePostModal() {
   return (
     <div id="create-post-modal">
       <h2 style={{fontFamily: 'Sour Gummy'}}>Create a New Post</h2>
-      <form onSubmit={handleSubmit} className='form'>
+      <form 
+        onSubmit={handleSubmit} 
+        className='form'
+        encType="multipart/form-data"
+      >
         <label style={{fontFamily: 'Sour Gummy'}}>
           Title:
           <input
@@ -40,11 +52,11 @@ function CreatePostModal() {
           />
         </label>
         <label style={{fontFamily: 'Sour Gummy'}}>
-          Image URL:
+          Image:
           <input
-            type="url"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
             required
           />
         </label>
@@ -56,8 +68,8 @@ function CreatePostModal() {
             required
           />
         </label>
-        <button type="submit" style={{fontFamily: 'Sour Gummy'}}>
-          Post
+        <button type="submit" style={{fontFamily: 'Sour Gummy'}} disabled={loading}>
+          {loading ? "Posting..." : "Post"}
         </button>
         <button type="button" onClick={closeModal} style={{fontFamily: 'Sour Gummy'}}>
           Cancel
