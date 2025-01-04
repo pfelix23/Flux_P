@@ -1,0 +1,16 @@
+.comments {
+    width: 400px;
+    padding: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    font-family: 'Sour Gummy';
+}
+
+.comment_button {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'Sour Gummy';
+    margin-top: 3%;
+}

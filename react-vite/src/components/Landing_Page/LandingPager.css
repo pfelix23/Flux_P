@@ -1,0 +1,232 @@
+.posts_section {
+    overflow-y: scroll;
+  }
+
+  .posts_section_2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow-y: scroll; 
+    border-left: solid #222222 .5px;
+    border-right: solid #222222 .5px;
+
+  }
+
+  .posts_section::-webkit-scrollbar,
+  .posts_section_2::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+  .posts_section::-webkit-scrollbar-track,
+  .posts_section_2::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .posts_section::-webkit-scrollbar-thumb,
+  .posts_section_2::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+
+  .post_container {
+    width: 695px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .posts_img {
+    height: 75vh;
+    width: 90%;
+    object-fit: cover;
+  } 
+
+  .posts_img:hover {
+    cursor: pointer;
+  }
+
+  .user_info {
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    background-color: #222222;
+    height: 50px;
+    margin-top: 15px;
+    margin-bottom: -4px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    width: 90%;
+    position: sticky;
+    padding-left: 10px;
+    padding-right: 5px;
+    padding-top: 5px;
+    color: white;
+    font-family: 'Sour Gummy';
+  }
+
+  .follow_text{
+    font-family: 'Sour Gummy';
+    padding-left: 5px;
+    color: #46976A;
+    font-size: large;
+    font-weight: bold;
+    margin-bottom: 1px;
+  }
+
+  .follow_text:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+
+  .added_info_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: #222222;
+    height: 50px;
+    margin-top: -4px;
+    margin-bottom: 15px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 90%;
+    position: sticky;
+    object-fit: contain;  
+
+  }
+
+  .added_info {
+    font-family: 'Sour Gummy';
+    color: white;
+    object-fit: contain;
+    margin-left: 10px;
+
+  }
+
+  .description {
+    font-family: 'Sour Gummy';
+    color: white;
+    object-fit: contain;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 560px;
+  }
+
+  .likes_container:hover .likes_count {
+    opacity: 1;
+    visibility: visible;
+    margin-left: 240px;
+    background-color: #222222;
+    font-family: 'Sour Gummy';
+  }
+
+  .comment_container:hover .comment_count {
+    opacity: 1;
+    visibility: visible;
+    margin-left: 240px;
+    background-color: #222222;
+    font-family: 'Sour Gummy';
+  }
+  .heart_icon {
+    margin-right: 5px;
+    cursor: pointer;
+    color: red;
+  }
+
+  .comment_icon {
+    margin-right: 5px;
+    cursor: pointer;
+    color: white;
+  }
+
+  .likes_count {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background-color: #222222; 
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-family: 'Sour GUmmy';
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-left: 240px;
+    margin-bottom: 2px;
+
+  }
+
+  .comment_count {
+    position: absolute;
+    top: 47.5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+    opacity: 0; 
+    visibility: hidden; 
+    pointer-events: none; 
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    background-color: #222222;
+    font-family: 'Sour Gummy';
+    margin-left: 240px;
+    margin-bottom: 2px;
+
+  }
+  .landing_page_button_container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    border-bottom: solid .5px #222222;
+  }
+
+  .landing_page_button {
+  display: flex;
+  justify-content: center;
+  font-family: 'Sour Gummy';
+  font-size: 30px;
+  width: 44%;
+  border-radius: 12px;
+  background-color: #000002;
+  color:white;
+  margin: 1px;
+  }
+
+  .landing_page_button.active {
+    background-color: #46976A;
+  }
+
+  .landing_page_button:hover {
+    cursor: pointer;
+    background-color: #46976A;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  } 
+
+  .comment_dots {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: .5%;
+    margin-right: 1.5%;
+  }
+
+  .comment_dots:hover {
+    cursor: pointer;
+  }
+
+  .comment_dots_container {
+    width: 100%;
+  }

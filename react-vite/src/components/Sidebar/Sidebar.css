@@ -1,0 +1,63 @@
+#sidebar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 100vh;
+  padding: 20px;
+  background-color: #000002;
+  overflow-y: auto;
+}
+
+#sidebar button {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #46976A;
+  color: #000002;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.1s;
+  border-radius: 999px;
+  font-family: 'Sour Gummy';
+  font-weight: bold;
+}
+
+#sidebar button:hover {
+  background-color: #3EC276;
+}
+
+#sidebar h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  border-bottom: 1px solid #FFFFFFA6;
+  padding-bottom: 5px;
+  width: 100%;
+  color: white;
+  font-family: 'Sour Gummy';
+}
+
+#users-list ul {
+list-style: none;
+padding: 0;
+width: 100%;
+color: #FFFFFFA6;
+font-family: 'Sour Gummy';
+}
+
+#users-list li {
+  padding: 10px;
+  cursor: pointer;
+}
+
+#users-list li:hover {
+  border: solid 1px #46976A;
+}
+
+#user_follow_div  {
+  display: flex;
+}
+
+#new_user:hover {
+  text-decoration: underline;
+  color: white;
+}
