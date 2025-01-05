@@ -11,28 +11,18 @@
 leave this running in a shell specifically for backend
 
 ```bash
-cd to root
-cp .env.example .env
-# modify .env to set port, backend db, schema, etc
+cd # makes ure you are in the root directroy fo your project
+cp .env.example .env # modify .env to set port, backend db, schema, etc
 pipenv install # in this case you can use: pipenv install -r requirements.txt
-pipenv run flask run # to start the flask server
+pipenv shell # activate your virtual environment
+flask db upgrade #migrate your database
+flask seed all #seed your database
+pipenv run # to start the flask server
 ```
 
 ### start frontend
 
 leave this running in a shell specifically for frontend
-
-```bash
-cd frontend
-npm install # only the first time
-npm run dev
-```
-
-### open web browser
-
-browse to http://127.0.0.1:8000
-
-## deploy
 
 bundle front end
 
@@ -40,6 +30,12 @@ bundle front end
 cd react-vite
 npm run build
 ```
+
+### open web browser
+
+browse to http://127.0.0.1:8000
+
+## deploy
 
 # Flask React Project
 
@@ -49,7 +45,7 @@ This is the starter for the Flask React project.
 
 1. Clone this repository (only this branch).
 
-2. Install dependencies.
+2. Use Pipenv to install dependencies.
 
    ```bash
    pipenv install -r requirements.txt
