@@ -30,7 +30,7 @@ npm run dev
 
 ### open web browser
 
-browse to http://localhost:5173/
+browse to http://127.0.0.1:8000
 
 ## deploy
 
