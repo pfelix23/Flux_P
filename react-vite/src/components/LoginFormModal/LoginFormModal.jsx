@@ -28,6 +28,22 @@ function LoginFormModal() {
     }
   };
 
+  const handleDemoLogin = async (e) => {
+    e.preventDefault();
+
+    const serverResponse = await dispatch(
+      thunkLogin({ email: "demo@aa.io", password: "password" })
+    );
+
+    if (serverResponse) {
+      setErrors(serverResponse);
+    } else {
+      closeModal();
+    }
+  };
+
+  const isDisabled = email.length < 4 || password.length < 6;
+
   return (
     <div id="login_modal">
       <h1>Log In</h1>
@@ -52,7 +68,12 @@ function LoginFormModal() {
           />
         </label>
         {errors.password && <p>{errors.password}</p>}
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={isDisabled}>
+          Log In{" "}
+        </button>
+        <button type="button" onClick={handleDemoLogin}>
+          Log in as Demo User
+        </button>
       </form>
     </div>
   );
