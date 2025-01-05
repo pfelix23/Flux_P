@@ -35,11 +35,10 @@ function PostPage() {
             const data = await res.json();
             if(data && data.errors) {
                 setErrors(data.errors);
-                console.log(errors)
             }
         })   
         dispatch(thunkLoadLikes());
-    }, [errors, dispatch]);
+    }, [post_id, dispatch]);
 
     const refreshPosts = async () => {
         fetch(`/api/posts/${post_id}`)
