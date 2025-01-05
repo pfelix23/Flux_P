@@ -17,11 +17,10 @@ const deletePost = (postId) => ({
   payload: postId,
 });
 
-export const thunkCreatePost = (postData) => async (dispatch) => {
+export const thunkCreatePost = (formData) => async (dispatch) => {
   const response = await fetch('/api/posts/create', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(postData),
+    body: formData
   });
 
   if (response.ok) {
@@ -38,7 +37,7 @@ export const thunkUpdatePost = (postId, title, description) => async (dispatch) 
   const response = await fetch(`/api/posts/${postId}/update`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ title, description }),  // No image included
+    body: JSON.stringify({ title, description })
   });
 
   if (response.ok) {
@@ -53,7 +52,7 @@ export const thunkUpdatePost = (postId, title, description) => async (dispatch) 
 
 export const thunkDeletePost = (postId) => async (dispatch) => {
   const response = await fetch(`/api/posts/${postId}`, {
-    method: "DELETE",
+    method: "DELETE"
   });
 
   if (response.ok) {

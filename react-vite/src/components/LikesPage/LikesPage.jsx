@@ -7,7 +7,7 @@ import { thunkLoadFollows } from '../../redux/follows';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import FollowModal from '../FollowModal/FollowModal';
-import PostModal from '../PostModal/PostModal'; // Import your Post Modal component
+import PostModal from '../PostModal/PostModal';
 import { useModal } from '../../context/Modal';
 import './LikesPage.css';
 
@@ -36,6 +36,22 @@ function LikesPage() {
         dispatch(thunkLoadFollows());    
         dispatch(thunkLoadLikes());
     }, [dispatch, errors]);
+
+    const refreshLikes = async () => {
+        fetch('/api/likes/current')
+        .then((res) => res.json())
+        .then((data) => setLikes(data.likes))
+        .catch(async (res) => {
+            const data = await res.json();
+            if(data && data.errors) {
+                setErrors(data.errors);
+                console.log(errors);
+            }
+        });
+
+        dispatch(thunkLoadFollows());    
+        dispatch(thunkLoadLikes());
+    };
 
     const refreshPosts = async () => {
         fetch('/api/likes/current')
@@ -116,7 +132,7 @@ function LikesPage() {
                 ) : (
                     [...likes].reverse().map((like) => {
                         const openLikesModal = () => {
-                            setModalContent(<LikeModal postId={like.id} isLiked={true} likeId={like.id} existingNote={like.note} closeModal={closeModal} refreshLikes={dispatch(thunkLoadLikes)}/> );
+                            setModalContent(<LikeModal postId={like.id} isLiked={true} likeId={like.id} existingNote={like.note} closeModal={closeModal} refreshLikes={refreshLikes}/> );
                         };
 
                         const openCommentModal = () => {

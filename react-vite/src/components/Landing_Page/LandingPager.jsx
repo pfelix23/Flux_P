@@ -8,6 +8,8 @@ import { thunkLoadFollows } from '../../redux/follows';
 import LikeModal from '../LikeModal/LikeModal';
 import CommentsModal from '../CommentsModal/CommentsModal';
 import FollowModal from '../FollowModal/FollowModal';
+import SignupFormModal from '../SignupFormModal/SignupFormModal';
+import LoginFormModal from '../LoginFormModal/LoginFormModal';
 import PostModal from '../PostModal/PostModal';
 import { useModal } from '../../context/Modal';
 import './LandingPager.css';
@@ -95,6 +97,14 @@ function LandingPager() {
         }))
     }
 
+    const OpenSignupFormModal = () => {
+        setModalContent(<SignupFormModal closeModal={closeModal}/>)
+    }
+
+    const OpenLoginFormModal = () => {
+        setModalContent(<LoginFormModal closeModal={closeModal}/>)
+    }
+
     const heart = (postId) => fillHeart[postId] ? <FaHeart /> : <FaRegHeart />
 
     const display = sessionUser ? (view === "all" ? posts : sessionPosts) : posts;
@@ -126,13 +136,25 @@ function LandingPager() {
                             navigate(`/posts/${post.id}`)
                         } else if(sessionUser && sessionUser.id !== post.id) {
                             navigate('/')
-                        } else navigate('/signup')
+                        } else {(e) => e.stopPropagation(); OpenSignupFormModal()}
                     }
                     const handleUser = () => {
                       const user = users?.find((user) => user.id === post.user_id);
                         if(user) {
                         return user.username
                       }
+                    }
+
+                    const handleHeartIcon = () => {
+                        if(sessionUser) {
+                            fill_heart(post.id);openLikesModal()
+                        } else  OpenLoginFormModal()
+                    }
+
+                    const handleCommentIcon = () => {
+                        if(sessionUser) {
+                            openCommentModal()
+                        } else OpenLoginFormModal()
                     }
 
                     const openLikesModal = () => {
@@ -163,11 +185,11 @@ function LandingPager() {
                             <div className='added_info_div'>
                             <div className='description'>{post.description}</div>
                             <div className='likes_container'> 
-                            <div className='heart_icon' onClick={(e) => {e.stopPropagation();fill_heart(post.id);{openLikesModal()}}}>{heart(post.id)}</div>
+                            <div className='heart_icon' onClick={() => handleHeartIcon()}>{heart(post.id)}</div>
                             <div className='likes_count'>{post.likes}</div>
                             </div>
                             <div className='comment_container'>
-                            <div className='comment_icon' onClick={(e) => {e.stopPropagation();openCommentModal()}}><FaRegCommentDots />
+                            <div className='comment_icon' onClick={(e) => handleCommentIcon()}><FaRegCommentDots />
                             </div>
                             <div className='comment_count'>{post.comment_count}</div>
                             </div>
