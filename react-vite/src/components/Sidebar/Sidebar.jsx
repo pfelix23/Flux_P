@@ -16,7 +16,7 @@ function Sidebar() {
   const follows = useSelector((state) => state.follows);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { setModalContent } = useModal();
+  const { setModalContent, closeModal } = useModal();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -27,7 +27,7 @@ function Sidebar() {
     fetchUsers();
 
     dispatch(thunkLoadFollows());
-  }, [dispatch]);
+  }, [dispatch, closeModal]);
 
   return (
     <section id="sidebar">

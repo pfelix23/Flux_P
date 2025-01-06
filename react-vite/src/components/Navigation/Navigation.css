@@ -44,3 +44,7 @@ color: white;
   width: 40%;
   height: auto;
 }
+
+.flux-logo:hover {
+  cursor: pointer;
+}

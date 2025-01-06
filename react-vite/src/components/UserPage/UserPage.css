@@ -167,3 +167,10 @@
     margin-left: 2%;
     color: white
   }
+
+  #no_posts {
+    font-family: 'Sour Gummy';
+    margin-left: 4.5%;
+    width: 100%;
+    color: white;
+  }
