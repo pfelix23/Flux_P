@@ -178,11 +178,19 @@
   }
   
   .posts_section_4 {
-    overflow-y: hidden;
+    overflow-y: scroll;
     scrollbar-width: none;
   }
   
   .posts_section_3 {
-    overflow-y: hidden;
+    overflow-y: scroll;
     scrollbar-width: none;
+  }
+
+  .posts_section_4::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .posts_section_3::-webkit-scrollbar {
+    display: none; 
   }

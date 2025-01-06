@@ -6,9 +6,22 @@
     border-left: solid #222222 .5px;
     border-right: solid #222222 .5px;
     width: 695px;
-    overflow-y: hidden;
+    overflow-y: scroll;
     scrollbar-width: none;
 
+  }
+
+  .posts_section_3 {
+    overflow-y: scroll;
+    scrollbar-width: none;
+  }
+
+  .posts_section_4::-webkit-scrollbar {
+    display: none; 
+  }
+
+  .posts_section_3::-webkit-scrollbar {
+    display: none; 
   }
 
   .post_section_2 {
@@ -195,7 +208,4 @@
   }
 
   
-  .post_container {
-    overflow-y: hidden;
-    scrollbar-width: none;
-  }
+  
