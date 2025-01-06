@@ -189,7 +189,7 @@ function LandingPager() {
                             <div className='likes_count'>{post.likes}</div>
                             </div>
                             <div className='comment_container'>
-                            <div className='comment_icon' onClick={(e) => handleCommentIcon()}><FaRegCommentDots />
+                            <div className='comment_icon' onClick={() => handleCommentIcon()}><FaRegCommentDots />
                             </div>
                             <div className='comment_count'>{post.comment_count}</div>
                             </div>
