@@ -171,3 +171,8 @@
     cursor: pointer;
     text-decoration: underline;
   }
+
+  .post_container {
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }

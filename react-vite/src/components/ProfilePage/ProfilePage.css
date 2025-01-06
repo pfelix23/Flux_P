@@ -189,3 +189,9 @@
     width: 100%;
     color: white;
   }
+
+  
+  .post_container {
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
