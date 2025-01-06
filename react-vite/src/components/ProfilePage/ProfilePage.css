@@ -6,6 +6,8 @@
     border-left: solid #222222 .5px;
     border-right: solid #222222 .5px;
     width: 695px;
+    overflow-y: hidden;
+    scrollbar-width: none;
 
   }
 
@@ -15,6 +17,8 @@
     justify-content: center;
     align-items: center;
     width: 90%;
+    overflow-y: hidden;
+    scrollbar-width: none;
     
   }
 
