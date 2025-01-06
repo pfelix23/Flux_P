@@ -1,11 +1,21 @@
-.posts_section {
+.posts_section_4 {
     /* display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center; */
     border-left: solid #222222 .5px;
     border-right: solid #222222 .5px;
+    width: 695px;
 
+  }
+
+  .post_section_2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    
   }
 
   .post_picture {
@@ -162,13 +172,20 @@
     justify-content: flex-start;
     align-items: flex-start;
     font-family: 'Sour Gummy';
-    margin-left: 4%;
+    margin-left: 4.5%;
     width: 100%;
-    height: fit-content;
+    /* height: fit-content; */
   }
 
   #h1_container {
-    width: 100%;
+    width: 695px;
     border-bottom: solid .5px #222222;
-    height: fit-content;
+    /* height: fit-content; */
+  }
+
+  #no_posts {
+    font-family: 'Sour Gummy';
+    margin-left: 4%;
+    width: 100%;
+    color: white;
   }

@@ -69,9 +69,13 @@ function ProfilePage() {
   const heart = (postId) => fillHeart[postId] ? <FaHeart /> : <FaRegHeart />
 
   return (
-    <div className="posts_section_2"><div id="h1_container"><h1 id="h1">{sessionUser.username}&apos;s profile</h1></div>
-      <section className="posts_section">
-        {[...posts].reverse().map((post) => {
+    <div className="posts_section_4">
+      <section className="posts_section_3">
+      <div id="h1_container"><h1 id="h1">{sessionUser.username}&apos;s profile</h1></div>
+        {posts.length === 0 ? (
+          <p id="no_posts">You do not have any posts.</p>
+        ) : (
+        [...posts].reverse().map((post) => {
           const like = Object.values(likes).find((like) => like.post_id === post.id);
           const isLiked = !!like;
           const likeId = like?.id || null;
@@ -112,7 +116,8 @@ function ProfilePage() {
               </div>
             </picture>
           );
-        })}
+        })
+      )}
       </section>
     </div>
   );

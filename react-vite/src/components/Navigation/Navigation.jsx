@@ -29,7 +29,7 @@ function Navigation() {
 
   return (
     <nav id="nav-bar">
-      <img src={logo} alt="Flux Logo" className="flux-logo" title="Ideas flow, connections grow!"/> 
+      <img onClick={() => navigate('/')} src={logo} alt="Flux Logo" className="flux-logo" title="Ideas flow, connections grow!"/> 
       <ul>
         {!user ? (
           <>

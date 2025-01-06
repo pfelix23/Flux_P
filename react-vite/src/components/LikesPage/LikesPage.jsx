@@ -124,11 +124,11 @@ function LikesPage() {
 
 
     return (
-        <div className='posts_section'>
-            <section className='posts_section_2'>
+        <div className='posts_section_4'>
+            <section className='posts_section_3'>
             <div className='h1_container'><h1 id='h1'>Likes</h1></div>
                 {likes.length === 0 ? (
-                    <p>You have not liked any posts.</p> 
+                    <p id='no_posts'>You have not liked any posts.</p> 
                 ) : (
                     [...likes].reverse().map((like) => {
                         const openLikesModal = () => {
@@ -159,11 +159,11 @@ function LikesPage() {
                                 />
                                 <div className='added_info_div'>
                                     <div className='description'>{like.description}</div>
-                                    {sessionUser && sessionUser.id === like.poster_id && (
+                                    {/* {sessionUser && sessionUser.id === like.poster_id && (
                                         <div className='manage_like_container'>
                                         <div className='manage_like_icon' onClick={(e) => {e.stopPropagation();openPostModal()}}><FaCog /></div>
                                         </div>
-                                    )}
+                                    )} */}
                                     <div className='likes_container'>
                                         <div className='heart_icon' onClick={(e) => {e.stopPropagation(); fill_heart(like.id); openLikesModal()}}>{heart(like.id)}</div>
                                         <div className='likes_count'>{like.likes_count}</div>

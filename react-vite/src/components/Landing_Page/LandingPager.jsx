@@ -41,7 +41,7 @@ function LandingPager() {
         })
         dispatch(thunkLoadFollows());    
         dispatch(thunkLoadLikes());
-    }, [errors, dispatch]);
+    }, [errors, dispatch, closeModal]);
 
     const refreshPosts = async () => {
         fetch('/api/posts')
@@ -69,7 +69,7 @@ function LandingPager() {
                 console.log(errors)
             }
         })
-    }, [sessionUser, errors]);
+    }, [sessionUser, errors, closeModal]);
     
     useEffect(() => {
         fetch('/api/users/others')
@@ -82,7 +82,7 @@ function LandingPager() {
                 console.log(errors)
             }
         })
-    }, [sessionUser, errors]); 
+    }, [sessionUser, errors, closeModal]); 
     
     
     const switchView = (viewType) => {
@@ -120,7 +120,10 @@ function LandingPager() {
                     onClick={() => switchView('following')}>Following</div>
                     </div>                    
                 )}
-                {[...display].map((post) => {
+                {display.length === 0 ? (
+                    <p style={{width:'695px', fontFamily:'Sour Gummy', marginLeft:'10%', color:'white'}}>No posts to display</p>
+                ) : (
+                [...display].map((post) => {
                     const like = Object.values(likes).find((like) => like.post_id === post.id);
                     const isLiked = !!like;
                     const likeId = like?.id || null;
@@ -196,8 +199,8 @@ function LandingPager() {
                             </div>
                         </picture>
                     );
-                })
-              }
+                }) 
+              )}
             </section>
         </div>
     )
