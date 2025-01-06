@@ -107,7 +107,7 @@ function UserPage() {
             </div>
 
             {posts.length === 0 ? (
-                <p>This user has not made any posts.</p>
+                <p id='no_posts'>This user has not made any posts.</p>
             ) : (
                 <section className="posts_section">
                     {[...posts].reverse().map((post) => {
